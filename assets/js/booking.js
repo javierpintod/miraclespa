@@ -88,10 +88,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // 2. Filtro de Categorías de Servicio
     categoryFilters.forEach(btn => {
         btn.addEventListener('click', () => {
-            categoryFilters.forEach(b => b.classList.remove('bg-[#12372a]', 'text-white'));
-            categoryFilters.forEach(b => b.classList.add('bg-white', 'text-gray-700'));
-            btn.classList.remove('bg-white', 'text-gray-700');
-            btn.classList.add('bg-[#12372a]', 'text-white');
+            categoryFilters.forEach(b => {
+                b.classList.remove('bg-[#18181B]', 'text-white');
+                b.classList.add('bg-white', 'text-[#18181B]');
+            });
+            btn.classList.remove('bg-white', 'text-[#18181B]');
+            btn.classList.add('bg-[#18181B]', 'text-white');
 
             const cat = btn.dataset.categoryFilter;
             state.selectedCategory = cat;
@@ -109,8 +111,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // 3. Selección de Servicio
     serviceCards.forEach(card => {
         card.addEventListener('click', () => {
-            serviceCards.forEach(c => c.classList.remove('border-[#12372a]', 'ring-2', 'ring-[#12372a]', 'bg-emerald-50/40'));
-            card.classList.add('border-[#12372a]', 'ring-2', 'ring-[#12372a]', 'bg-emerald-50/40');
+            serviceCards.forEach(c => c.classList.remove('border-[#FF006E]', 'bg-[#FFF9E6]', 'memphis-shadow-pink', 'ring-2', 'ring-[#FF006E]'));
+            card.classList.add('border-[#FF006E]', 'bg-[#FFF9E6]', 'memphis-shadow-pink', 'ring-2', 'ring-[#FF006E]');
 
             state.selectedService = {
                 id: parseInt(card.dataset.id),
@@ -281,19 +283,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Opción 1: Asignación automática ("Cualquier profesional")
         const anyCard = document.createElement('div');
-        anyCard.className = `prof-card p-4 rounded-xl border ${state.selectedProfessional === 'any' ? 'border-[#12372a] bg-emerald-50/50 ring-2 ring-[#12372a]' : 'border-gray-200 bg-white'} cursor-pointer hover:border-[#12372a] transition-all flex items-center gap-4`;
+        anyCard.className = `prof-card p-4 rounded-2xl border-2 ${state.selectedProfessional === 'any' ? 'border-[#18181B] bg-[#FFF9E6] memphis-shadow-yellow ring-2 ring-[#FFBE0B]' : 'border-[#18181B] bg-white memphis-shadow-sm'} cursor-pointer transition-all flex items-center gap-4`;
         anyCard.innerHTML = `
-            <div class="w-12 h-12 rounded-full bg-[#12372a] text-[#d4af37] font-serif font-bold text-lg flex items-center justify-center shrink-0">
+            <div class="w-12 h-12 rounded-xl bg-[#FFBE0B] text-[#18181B] font-bold text-xl flex items-center justify-center shrink-0 border-2 border-[#18181B] memphis-shadow-sm">
                 ✨
             </div>
             <div class="flex-1">
                 <div class="flex items-center gap-2">
-                    <h4 class="font-bold text-gray-900 text-sm">Cualquier Profesional Disponible</h4>
-                    <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-full">Recomendado</span>
+                    <h4 class="font-space font-bold text-gray-900 text-sm">Cualquier Profesional Disponible</h4>
+                    <span class="memphis-sticker sticker-pink text-[9px]">Recomendado</span>
                 </div>
-                <p class="text-xs text-gray-500 mt-0.5">Asignación inteligente del terapeuta con mayor disponibilidad para este horario.</p>
+                <p class="text-xs text-gray-600 font-medium mt-0.5">Asignación inteligente del terapeuta con mayor disponibilidad para este horario.</p>
             </div>
-            <div class="text-xs font-bold text-[#12372a]">Seleccionar</div>
+            <div class="text-xs font-extrabold text-[#3A86FF]">Elegir →</div>
         `;
 
         anyCard.addEventListener('click', () => {
@@ -305,24 +307,24 @@ document.addEventListener('DOMContentLoaded', () => {
         profs.forEach(p => {
             const isAvail = (p.is_available_for_slot !== false);
             const card = document.createElement('div');
-            card.className = `prof-card p-4 rounded-xl border ${state.selectedProfessional == p.id ? 'border-[#12372a] bg-emerald-50/50 ring-2 ring-[#12372a]' : 'border-gray-200 bg-white'} ${isAvail ? 'cursor-pointer hover:border-[#12372a]' : 'opacity-50 cursor-not-allowed bg-gray-50'} transition-all flex items-center gap-4`;
+            card.className = `prof-card p-4 rounded-2xl border-2 ${state.selectedProfessional == p.id ? 'border-[#18181B] bg-[#FFF9E6] memphis-shadow-yellow ring-2 ring-[#FFBE0B]' : 'border-[#18181B] bg-white memphis-shadow-sm'} ${isAvail ? 'cursor-pointer' : 'opacity-40 cursor-not-allowed bg-gray-100'} transition-all flex items-center gap-4`;
 
             const initials = p.name.split(' ').map(n => n[0]).join('').substring(0, 2);
 
             card.innerHTML = `
-                <div class="w-12 h-12 rounded-full bg-[#12372a]/10 text-[#12372a] font-bold text-sm flex items-center justify-center shrink-0">
+                <div class="w-12 h-12 rounded-xl bg-[#3A86FF] text-white font-space font-bold text-sm flex items-center justify-center shrink-0 border-2 border-[#18181B] memphis-shadow-sm">
                     ${initials}
                 </div>
                 <div class="flex-1 min-w-0">
                     <div class="flex items-center gap-2">
-                        <h4 class="font-bold text-gray-900 text-sm truncate">${p.name}</h4>
-                        <span class="text-xs text-amber-500 font-semibold flex items-center gap-0.5">★ ${parseFloat(p.rating).toFixed(1)}</span>
+                        <h4 class="font-space font-bold text-gray-900 text-sm truncate">${p.name}</h4>
+                        <span class="text-xs text-[#18181B] font-extrabold bg-[#FFE484] px-1.5 py-0.5 rounded border border-[#18181B]">★ ${parseFloat(p.rating).toFixed(1)}</span>
                     </div>
-                    <p class="text-xs text-gray-500 truncate">${p.title}</p>
-                    ${!isAvail ? '<span class="text-[10px] text-rose-600 font-bold block mt-0.5">Ocupado en este horario</span>' : ''}
+                    <p class="text-xs text-gray-600 font-medium truncate">${p.title}</p>
+                    ${!isAvail ? '<span class="text-[10px] text-[#FF006E] font-extrabold block mt-0.5">Ocupado en este horario</span>' : ''}
                 </div>
                 <div>
-                    ${isAvail ? `<span class="text-xs font-bold text-[#12372a]">Elegir</span>` : `<span class="text-xs text-gray-400">No disp.</span>`}
+                    ${isAvail ? `<span class="text-xs font-extrabold text-[#3A86FF]">Elegir →</span>` : `<span class="text-xs text-gray-400 font-bold">No disp.</span>`}
                 </div>
             `;
 
@@ -337,8 +339,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function selectProf(id, name, element) {
-        document.querySelectorAll('.prof-card').forEach(c => c.classList.remove('border-[#12372a]', 'bg-emerald-50/50', 'ring-2', 'ring-[#12372a]'));
-        element.classList.add('border-[#12372a]', 'bg-emerald-50/50', 'ring-2', 'ring-[#12372a]');
+        document.querySelectorAll('.prof-card').forEach(c => {
+            c.classList.remove('border-[#18181B]', 'bg-[#FFF9E6]', 'memphis-shadow-yellow', 'ring-2', 'ring-[#FFBE0B]');
+            c.classList.add('bg-white', 'memphis-shadow-sm');
+        });
+        element.classList.remove('bg-white', 'memphis-shadow-sm');
+        element.classList.add('border-[#18181B]', 'bg-[#FFF9E6]', 'memphis-shadow-yellow', 'ring-2', 'ring-[#FFBE0B]');
 
         state.selectedProfessional = id;
         state.selectedProfessionalName = name;

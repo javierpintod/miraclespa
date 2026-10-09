@@ -35,30 +35,30 @@ class ViewHelper {
     public static function statusBadge(string $status): string {
         $badges = [
             'confirmada' => [
-                'label' => 'Confirmada',
-                'class' => 'bg-emerald-100 text-emerald-800 border-emerald-200'
+                'label' => '✓ Confirmada',
+                'class' => 'bg-[#06D6A0] text-[#18181B] border-2 border-[#18181B]'
             ],
             'pendiente' => [
-                'label' => 'Pendiente',
-                'class' => 'bg-amber-100 text-amber-800 border-amber-200'
+                'label' => '⏱ Pendiente',
+                'class' => 'bg-[#FFBE0B] text-[#18181B] border-2 border-[#18181B]'
             ],
             'completada' => [
-                'label' => 'Completada',
-                'class' => 'bg-blue-100 text-blue-800 border-blue-200'
+                'label' => '★ Completada',
+                'class' => 'bg-[#3A86FF] text-white border-2 border-[#18181B]'
             ],
             'cancelada' => [
-                'label' => 'Cancelada',
-                'class' => 'bg-rose-100 text-rose-800 border-rose-200'
+                'label' => '✕ Cancelada',
+                'class' => 'bg-[#FF006E] text-white border-2 border-[#18181B]'
             ],
             'reprogramada' => [
-                'label' => 'Reprogramada',
-                'class' => 'bg-purple-100 text-purple-800 border-purple-200'
+                'label' => '↻ Reprogramada',
+                'class' => 'bg-[#8338EC] text-white border-2 border-[#18181B]'
             ],
         ];
 
-        $info = $badges[$status] ?? ['label' => ucfirst($status), 'class' => 'bg-gray-100 text-gray-800 border-gray-200'];
+        $info = $badges[$status] ?? ['label' => ucfirst($status), 'class' => 'bg-white text-[#18181B] border-2 border-[#18181B]'];
 
-        return "<span class='inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border {$info['class']}'>
+        return "<span class='inline-flex items-center px-3 py-1 rounded-full text-xs font-extrabold memphis-shadow-sm {$info['class']}'>
                     {$info['label']}
                 </span>";
     }

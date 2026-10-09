@@ -32,83 +32,83 @@ $flash = AuthHelper::getFlash();
         .font-serif { font-family: 'Playfair Display', serif; }
     </style>
 </head>
-<body class="bg-[#f4f7f5] text-[#1c2420] min-h-screen flex">
+<body class="bg-[#FDFBF7] text-[#18181B] min-h-screen flex">
 
-    <!-- SIDEBAR DE ADMINISTRACIÓN -->
-    <aside class="w-64 bg-[#12372a] text-white shrink-0 flex flex-col min-h-screen border-r border-[#1a4a39] hidden md:flex sticky top-0 h-screen z-30">
+    <!-- SIDEBAR DE ADMINISTRACIÓN MEMPHIS DESIGN -->
+    <aside class="w-64 bg-[#18181B] text-white shrink-0 flex flex-col min-h-screen border-r-2 border-[#18181B] hidden md:flex sticky top-0 h-screen z-30">
         <!-- Logo -->
-        <div class="p-6 border-b border-[#1a4a39]">
+        <div class="p-6 border-b-2 border-[#27272A]">
             <a href="index.php" class="flex items-center gap-3">
-                <span class="w-10 h-10 rounded-full bg-[#d4af37]/20 border border-[#d4af37]/40 text-[#d4af37] flex items-center justify-center font-serif font-bold text-lg">M</span>
+                <span class="w-10 h-10 rounded-2xl bg-[#FF006E] text-white border-2 border-[#FFBE0B] flex items-center justify-center font-bold text-lg memphis-shadow-sm">M</span>
                 <div>
-                    <span class="font-serif text-lg font-bold tracking-tight block">Miracle Spa</span>
-                    <span class="text-[10px] uppercase tracking-widest text-[#d4af37] font-semibold -mt-1 block">Panel de Negocio</span>
+                    <span class="font-bold text-lg tracking-tight block text-white">Miracle Spa</span>
+                    <span class="text-[10px] uppercase tracking-widest text-[#FFBE0B] font-extrabold -mt-1 block">⚡ Panel de Negocio</span>
                 </div>
             </a>
         </div>
 
         <!-- Menú de Navegación -->
-        <nav class="flex-1 p-4 space-y-1.5 overflow-y-auto text-xs font-semibold">
-            <div class="text-[10px] uppercase font-bold text-emerald-400/60 px-3 py-1 tracking-wider">Operaciones</div>
+        <nav class="flex-1 p-4 space-y-1.5 overflow-y-auto text-xs font-bold">
+            <div class="text-[10px] uppercase font-extrabold text-[#FFBE0B] px-3 py-1 tracking-wider">Operaciones</div>
 
-            <a href="index.php" class="flex items-center gap-3 px-3 py-2.5 rounded-xl transition-colors <?= $currentScript === 'index.php' ? 'bg-[#1a4a39] text-[#d4af37] font-bold shadow-xs' : 'text-emerald-100/80 hover:bg-[#164333] hover:text-white' ?>">
+            <a href="index.php" class="flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all <?= $currentScript === 'index.php' ? 'bg-[#FFBE0B] text-[#18181B] font-extrabold border-2 border-[#18181B] memphis-shadow-sm' : 'text-gray-300 hover:bg-[#27272A] hover:text-[#FFE484]' ?>">
                 <span class="text-base">📊</span>
                 <span>Dashboard de Ocupación</span>
             </a>
 
-            <a href="calendario.php" class="flex items-center gap-3 px-3 py-2.5 rounded-xl transition-colors <?= $currentScript === 'calendario.php' ? 'bg-[#1a4a39] text-[#d4af37] font-bold shadow-xs' : 'text-emerald-100/80 hover:bg-[#164333] hover:text-white' ?>">
+            <a href="calendario.php" class="flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all <?= $currentScript === 'calendario.php' ? 'bg-[#FFBE0B] text-[#18181B] font-extrabold border-2 border-[#18181B] memphis-shadow-sm' : 'text-gray-300 hover:bg-[#27272A] hover:text-[#FFE484]' ?>">
                 <span class="text-base">📅</span>
                 <span>Calendario Global</span>
             </a>
 
-            <a href="citas.php" class="flex items-center gap-3 px-3 py-2.5 rounded-xl transition-colors <?= $currentScript === 'citas.php' ? 'bg-[#1a4a39] text-[#d4af37] font-bold shadow-xs' : 'text-emerald-100/80 hover:bg-[#164333] hover:text-white' ?>">
+            <a href="citas.php" class="flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all <?= $currentScript === 'citas.php' ? 'bg-[#FFBE0B] text-[#18181B] font-extrabold border-2 border-[#18181B] memphis-shadow-sm' : 'text-gray-300 hover:bg-[#27272A] hover:text-[#FFE484]' ?>">
                 <span class="text-base">📋</span>
                 <span>Gestión de Citas</span>
             </a>
 
-            <div class="text-[10px] uppercase font-bold text-emerald-400/60 px-3 pt-4 pb-1 tracking-wider">Catálogo & Personal</div>
+            <div class="text-[10px] uppercase font-extrabold text-[#06D6A0] px-3 pt-4 pb-1 tracking-wider">Catálogo & Personal</div>
 
-            <a href="servicios.php" class="flex items-center gap-3 px-3 py-2.5 rounded-xl transition-colors <?= $currentScript === 'servicios.php' ? 'bg-[#1a4a39] text-[#d4af37] font-bold shadow-xs' : 'text-emerald-100/80 hover:bg-[#164333] hover:text-white' ?>">
+            <a href="servicios.php" class="flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all <?= $currentScript === 'servicios.php' ? 'bg-[#FFBE0B] text-[#18181B] font-extrabold border-2 border-[#18181B] memphis-shadow-sm' : 'text-gray-300 hover:bg-[#27272A] hover:text-[#FFE484]' ?>">
                 <span class="text-base">💆</span>
                 <span>Servicios & Precios</span>
             </a>
 
-            <a href="profesionales.php" class="flex items-center gap-3 px-3 py-2.5 rounded-xl transition-colors <?= $currentScript === 'profesionales.php' ? 'bg-[#1a4a39] text-[#d4af37] font-bold shadow-xs' : 'text-emerald-100/80 hover:bg-[#164333] hover:text-white' ?>">
+            <a href="profesionales.php" class="flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all <?= $currentScript === 'profesionales.php' ? 'bg-[#FFBE0B] text-[#18181B] font-extrabold border-2 border-[#18181B] memphis-shadow-sm' : 'text-gray-300 hover:bg-[#27272A] hover:text-[#FFE484]' ?>">
                 <span class="text-base">👥</span>
                 <span>Profesionales & Horarios</span>
             </a>
 
-            <a href="clientes.php" class="flex items-center gap-3 px-3 py-2.5 rounded-xl transition-colors <?= $currentScript === 'clientes.php' ? 'bg-[#1a4a39] text-[#d4af37] font-bold shadow-xs' : 'text-emerald-100/80 hover:bg-[#164333] hover:text-white' ?>">
+            <a href="clientes.php" class="flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all <?= $currentScript === 'clientes.php' ? 'bg-[#FFBE0B] text-[#18181B] font-extrabold border-2 border-[#18181B] memphis-shadow-sm' : 'text-gray-300 hover:bg-[#27272A] hover:text-[#FFE484]' ?>">
                 <span class="text-base">📇</span>
                 <span>Clientes & Historial</span>
             </a>
 
-            <div class="text-[10px] uppercase font-bold text-emerald-400/60 px-3 pt-4 pb-1 tracking-wider">Comunicaciones & Sistema</div>
+            <div class="text-[10px] uppercase font-extrabold text-[#3A86FF] px-3 pt-4 pb-1 tracking-wider">Comunicaciones & Sistema</div>
 
-            <a href="correos.php" class="flex items-center gap-3 px-3 py-2.5 rounded-xl transition-colors <?= $currentScript === 'correos.php' ? 'bg-[#1a4a39] text-[#d4af37] font-bold shadow-xs' : 'text-emerald-100/80 hover:bg-[#164333] hover:text-white' ?>">
+            <a href="correos.php" class="flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all <?= $currentScript === 'correos.php' ? 'bg-[#FFBE0B] text-[#18181B] font-extrabold border-2 border-[#18181B] memphis-shadow-sm' : 'text-gray-300 hover:bg-[#27272A] hover:text-[#FFE484]' ?>">
                 <span class="text-base">✉️</span>
                 <span>Bandeja de Correos</span>
             </a>
 
-            <a href="configuracion.php" class="flex items-center gap-3 px-3 py-2.5 rounded-xl transition-colors <?= $currentScript === 'configuracion.php' ? 'bg-[#1a4a39] text-[#d4af37] font-bold shadow-xs' : 'text-emerald-100/80 hover:bg-[#164333] hover:text-white' ?>">
+            <a href="configuracion.php" class="flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all <?= $currentScript === 'configuracion.php' ? 'bg-[#FFBE0B] text-[#18181B] font-extrabold border-2 border-[#18181B] memphis-shadow-sm' : 'text-gray-300 hover:bg-[#27272A] hover:text-[#FFE484]' ?>">
                 <span class="text-base">⚙️</span>
                 <span>Configuración & SMTP</span>
             </a>
 
-            <a href="../tests.php" class="flex items-center gap-3 px-3 py-2.5 rounded-xl transition-colors text-emerald-200/90 hover:bg-[#164333] hover:text-white">
+            <a href="../tests.php" class="flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all text-[#FFE484] hover:bg-[#27272A] hover:text-white">
                 <span class="text-base">🧪</span>
                 <span>Ejecutor de Pruebas</span>
             </a>
         </nav>
 
         <!-- Pie de Usuario -->
-        <div class="p-4 border-t border-[#1a4a39] text-xs">
+        <div class="p-4 border-t-2 border-[#27272A] text-xs bg-[#111111]">
             <div class="flex items-center justify-between">
                 <div>
                     <div class="font-bold text-white"><?= htmlspecialchars($loggedUser['name'] ?? 'Admin') ?></div>
-                    <div class="text-[10px] text-emerald-300 capitalize"><?= htmlspecialchars($loggedUser['role'] ?? 'Admin') ?></div>
+                    <div class="text-[10px] text-[#06D6A0] font-extrabold uppercase"><?= htmlspecialchars($loggedUser['role'] ?? 'Admin') ?></div>
                 </div>
-                <a href="logout.php" title="Cerrar Sesión" class="text-gray-300 hover:text-rose-400 transition-colors p-1.5 rounded-lg hover:bg-[#164333]">
+                <a href="logout.php" title="Cerrar Sesión" class="text-gray-300 hover:text-[#FF006E] transition-colors p-1.5 rounded-lg hover:bg-[#27272A]">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
                 </a>
             </div>
@@ -117,27 +117,27 @@ $flash = AuthHelper::getFlash();
 
     <!-- ÁREA DE CONTENIDO PRINCIPAL -->
     <div class="flex-1 flex flex-col min-w-0">
-        <!-- TOPBAR SUPERIOR -->
-        <header class="bg-white border-b border-gray-200 h-16 flex items-center justify-between px-6 sticky top-0 z-20 shadow-2xs">
+        <!-- TOPBAR SUPERIOR MEMPHIS -->
+        <header class="bg-white border-b-2 border-[#18181B] h-16 flex items-center justify-between px-6 sticky top-0 z-20">
             <div class="flex items-center gap-3">
-                <h1 class="font-serif font-bold text-lg text-gray-900"><?= $pageTitle ?? 'Panel de Control' ?></h1>
+                <h1 class="font-bold text-lg text-[#18181B]"><?= $pageTitle ?? 'Panel de Control' ?></h1>
             </div>
 
             <div class="flex items-center gap-4">
-                <a href="../index.php" target="_blank" class="text-xs font-semibold text-gray-600 hover:text-[#12372a] flex items-center gap-1.5 bg-gray-50 border border-gray-200 px-3 py-1.5 rounded-lg">
+                <a href="../index.php" target="_blank" class="btn-memphis-yellow text-xs px-3 py-1.5 rounded-xl flex items-center gap-1.5">
                     <span>Ver Sitio Público</span>
                     <span>↗</span>
                 </a>
-                <div class="text-xs text-gray-400">
+                <div class="text-xs font-bold text-gray-500 bg-gray-100 px-3 py-1.5 rounded-xl border border-gray-300">
                     <?= date('d M, Y') ?>
                 </div>
             </div>
         </header>
 
-        <!-- ALERTAS FLASH -->
+        <!-- ALERTAS FLASH MEMPHIS -->
         <?php if ($flash): ?>
             <div class="px-6 pt-4">
-                <div class="p-4 rounded-xl text-xs font-medium border <?= $flash['type'] === 'success' ? 'bg-emerald-50 text-emerald-800 border-emerald-200' : 'bg-rose-50 text-rose-800 border-rose-200' ?>">
+                <div class="p-4 rounded-xl text-xs font-bold border-2 border-[#18181B] memphis-shadow-sm <?= $flash['type'] === 'success' ? 'bg-[#06D6A0] text-[#18181B]' : 'bg-[#FF006E] text-white' ?>">
                     <?= htmlspecialchars($flash['message']) ?>
                 </div>
             </div>

@@ -37,20 +37,20 @@ $duration = round((microtime(true) - $startTime) * 1000, 2);
         .font-serif { font-family: 'Playfair Display', serif; }
     </style>
 </head>
-<body class="bg-[#f7f9f7] text-[#1c2420] min-h-screen">
-    <!-- Header -->
-    <header class="bg-white border-b border-[#e2e8e3] sticky top-0 z-30">
+<body class="bg-[#FDFBF7] text-[#18181B] min-h-screen">
+    <!-- Header Memphis -->
+    <header class="bg-white border-b-2 border-[#18181B] sticky top-0 z-30">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
             <div class="flex items-center gap-3">
                 <a href="index.php" class="flex items-center gap-2">
-                    <span class="w-8 h-8 rounded-full bg-[#12372a] text-[#d4af37] flex items-center justify-center font-serif font-bold text-sm">M</span>
-                    <span class="font-serif text-lg font-bold text-[#12372a]">Miracle Spa</span>
+                    <span class="w-9 h-9 rounded-xl bg-[#FF006E] text-white flex items-center justify-center font-bold text-base border-2 border-[#18181B] memphis-shadow-sm">M</span>
+                    <span class="font-bold text-lg text-[#18181B]">Miracle Spa</span>
                 </a>
-                <span class="text-xs bg-[#e9f2ec] text-[#12372a] px-2.5 py-1 rounded-full font-semibold">Suite de Pruebas Automatizadas</span>
+                <span class="text-xs bg-[#FFBE0B] text-[#18181B] px-3 py-1 rounded-full font-extrabold border border-[#18181B] memphis-shadow-sm">🧪 Suite Automatizada</span>
             </div>
             <div class="flex items-center gap-3">
-                <a href="index.php" class="text-sm font-medium text-gray-600 hover:text-[#12372a] transition-colors">Portal Cliente</a>
-                <a href="admin/index.php" class="text-sm font-semibold bg-[#12372a] text-white px-3.5 py-1.5 rounded-lg hover:bg-[#1a4a39] transition-colors">Panel Admin</a>
+                <a href="index.php" class="text-xs font-bold text-gray-700 hover:text-[#FF006E]">Portal Cliente</a>
+                <a href="admin/index.php" class="btn-memphis-yellow text-xs px-3.5 py-1.5 rounded-xl font-extrabold">Panel Admin</a>
             </div>
         </div>
     </header>
@@ -58,48 +58,49 @@ $duration = round((microtime(true) - $startTime) * 1000, 2);
     <main class="max-w-5xl mx-auto px-4 sm:px-6 py-10">
         <!-- Titulo y Resumen -->
         <div class="mb-8">
-            <h1 class="text-3xl font-serif font-bold text-[#12372a] mb-2">Validación de Lógica y Algoritmos</h1>
-            <p class="text-gray-600 text-sm">
-                Pruebas de integridad para el cálculo de intervalos temporales, solapamiento con buffer de higienización, doble reserva atómica y políticas de cancelación.
+            <span class="memphis-sticker sticker-pink mb-2">⚡ Verificación Continua</span>
+            <h1 class="text-3xl font-extrabold text-[#18181B] mb-2 mt-2">Validación de Lógica y Algoritmos</h1>
+            <p class="text-gray-700 text-sm font-medium">
+                Pruebas de integridad para el cálculo de intervalos temporales, solapamiento con buffer de 15 min, prevención de doble reserva y JWT.
             </p>
         </div>
 
-        <!-- KPI Cards de Resultados -->
+        <!-- KPI Cards de Resultados Memphis -->
         <div class="grid grid-cols-1 sm:grid-cols-4 gap-4 mb-8">
-            <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
-                <div class="text-xs font-semibold uppercase tracking-wider text-gray-500 mb-1">Total de Pruebas</div>
-                <div class="text-3xl font-bold text-gray-900"><?= $total ?></div>
+            <div class="bg-white p-5 rounded-2xl border-2 border-[#18181B] memphis-shadow-sm">
+                <div class="text-xs font-extrabold uppercase tracking-wider text-gray-500 mb-1">Total de Pruebas</div>
+                <div class="text-3xl font-extrabold text-[#18181B]"><?= $total ?></div>
             </div>
-            <div class="bg-white p-5 rounded-xl border border-emerald-200 shadow-sm bg-gradient-to-br from-emerald-50/50 to-white">
-                <div class="text-xs font-semibold uppercase tracking-wider text-emerald-700 mb-1">Aprobadas (PASS)</div>
-                <div class="text-3xl font-bold text-emerald-600"><?= $passed ?></div>
+            <div class="bg-white p-5 rounded-2xl border-2 border-[#18181B] memphis-shadow-sm">
+                <div class="text-xs font-extrabold uppercase tracking-wider text-[#06D6A0] mb-1">Aprobadas (PASS)</div>
+                <div class="text-3xl font-extrabold text-[#06D6A0]"><?= $passed ?></div>
             </div>
-            <div class="bg-white p-5 rounded-xl border <?= $failed > 0 ? 'border-rose-300 bg-rose-50' : 'border-gray-200' ?> shadow-sm">
-                <div class="text-xs font-semibold uppercase tracking-wider <?= $failed > 0 ? 'text-rose-700' : 'text-gray-500' ?> mb-1">Fallidas (FAIL)</div>
-                <div class="text-3xl font-bold <?= $failed > 0 ? 'text-rose-600' : 'text-gray-400' ?>"><?= $failed ?></div>
+            <div class="bg-white p-5 rounded-2xl border-2 border-[#18181B] memphis-shadow-sm">
+                <div class="text-xs font-extrabold uppercase tracking-wider <?= $failed > 0 ? 'text-[#FF006E]' : 'text-gray-500' ?> mb-1">Fallidas (FAIL)</div>
+                <div class="text-3xl font-extrabold <?= $failed > 0 ? 'text-[#FF006E]' : 'text-gray-400' ?>"><?= $failed ?></div>
             </div>
-            <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
-                <div class="text-xs font-semibold uppercase tracking-wider text-gray-500 mb-1">Tiempo de Ejecución</div>
-                <div class="text-3xl font-bold text-gray-900"><?= $duration ?> <span class="text-sm font-normal text-gray-500">ms</span></div>
+            <div class="bg-white p-5 rounded-2xl border-2 border-[#18181B] memphis-shadow-sm">
+                <div class="text-xs font-extrabold uppercase tracking-wider text-gray-500 mb-1">Tiempo de Ejecución</div>
+                <div class="text-3xl font-extrabold text-[#3A86FF]"><?= $duration ?> <span class="text-sm font-bold text-gray-500">ms</span></div>
             </div>
         </div>
 
-        <!-- Barra de Progreso General -->
-        <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm mb-8">
+        <!-- Barra de Progreso General Memphis -->
+        <div class="bg-white p-6 rounded-2xl border-2 border-[#18181B] memphis-shadow-sm mb-8">
             <div class="flex items-center justify-between text-sm mb-2">
-                <span class="font-semibold text-gray-700">Tasa de Aprobación</span>
-                <span class="font-bold text-emerald-600"><?= $total > 0 ? round(($passed / $total) * 100) : 0 ?>% Éxito</span>
+                <span class="font-extrabold text-[#18181B]">Tasa de Aprobación</span>
+                <span class="font-extrabold text-[#06D6A0] bg-[#18181B] px-3 py-1 rounded-full text-xs"><?= $total > 0 ? round(($passed / $total) * 100) : 0 ?>% Éxito</span>
             </div>
-            <div class="w-full bg-gray-100 rounded-full h-3 overflow-hidden">
-                <div class="bg-emerald-500 h-3 rounded-full transition-all duration-500" style="width: <?= $total > 0 ? round(($passed / $total) * 100) : 0 ?>%"></div>
+            <div class="w-full bg-gray-100 rounded-full h-3.5 overflow-hidden border border-[#18181B]">
+                <div class="bg-[#06D6A0] h-3.5 rounded-full transition-all duration-500" style="width: <?= $total > 0 ? round(($passed / $total) * 100) : 0 ?>%"></div>
             </div>
         </div>
 
-        <!-- Lista detallada de casos de prueba -->
-        <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
-            <div class="px-6 py-4 bg-gray-50 border-b border-gray-200 flex items-center justify-between">
-                <h2 class="text-base font-bold text-gray-800">Desglose de Aserciones y Pruebas Unitarias</h2>
-                <a href="tests.php" class="text-xs font-semibold text-[#12372a] hover:underline flex items-center gap-1">
+        <!-- Lista detallada de casos de prueba Memphis -->
+        <div class="bg-white rounded-2xl border-2 border-[#18181B] memphis-shadow-sm overflow-hidden">
+            <div class="px-6 py-4 bg-[#FFF9E6] border-b-2 border-[#18181B] flex items-center justify-between">
+                <h2 class="text-base font-extrabold text-[#18181B]">Desglose de Aserciones y Pruebas Unitarias</h2>
+                <a href="tests.php" class="btn-memphis-yellow text-xs px-3 py-1.5 rounded-xl font-extrabold flex items-center gap-1">
                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
                     Re-ejecutar Pruebas
                 </a>
