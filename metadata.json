@@ -1,0 +1,6 @@
+{
+  "name": "Aura Spa - Gestión & Agendamiento",
+  "description": "Sistema integral de gestión de spa, agendamiento de citas multisericio, panel administrativo y dashboard de demanda clínica.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
