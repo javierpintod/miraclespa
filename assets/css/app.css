@@ -1,0 +1,138 @@
+/* ==========================================================
+   MIRACLE SPA SANCTUARY - SISTEMA DE DISEÑO DE LUJO
+   ========================================================== */
+
+:root {
+    --spa-forest: #12372a;
+    --spa-emerald: #1a4a39;
+    --spa-mint: #e8f3ec;
+    --spa-gold: #c5a880;
+    --spa-gold-dark: #b39265;
+    --spa-gold-light: #f7f3ee;
+    --spa-charcoal: #1c2420;
+    --spa-sand: #fdfbf7;
+    --spa-card-bg: #ffffff;
+    --spa-border: #e6ede8;
+}
+
+body {
+    background-color: var(--spa-sand);
+    color: var(--spa-charcoal);
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+.font-serif {
+    font-family: 'Playfair Display', Georgia, serif;
+}
+
+/* Glassmorphism */
+.glass-panel {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+.glass-dark {
+    background: rgba(18, 55, 42, 0.95);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(197, 168, 128, 0.2);
+}
+
+/* Micro-animaciones y Transiciones */
+.transition-smooth {
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-hover {
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.card-hover:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 24px -10px rgba(18, 55, 42, 0.12);
+    border-color: var(--spa-gold);
+}
+
+/* Chips de selección de horario */
+.time-chip {
+    transition: all 0.18s ease;
+}
+
+.time-chip:hover {
+    border-color: var(--spa-emerald);
+    background-color: var(--spa-mint);
+}
+
+.time-chip.selected {
+    background-color: var(--spa-forest) !important;
+    color: #ffffff !important;
+    border-color: var(--spa-forest) !important;
+    box-shadow: 0 4px 12px rgba(18, 55, 42, 0.25);
+}
+
+/* Indicadores de pasos (Wizard) */
+.wizard-step-bullet {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.875rem;
+    transition: all 0.3s ease;
+}
+
+.wizard-step-bullet.active {
+    background-color: var(--spa-forest);
+    color: #ffffff;
+    box-shadow: 0 0 0 4px rgba(18, 55, 42, 0.15);
+}
+
+.wizard-step-bullet.completed {
+    background-color: var(--spa-gold);
+    color: #ffffff;
+}
+
+.wizard-step-bullet.inactive {
+    background-color: #f1f5f2;
+    color: #94a398;
+    border: 1px solid var(--spa-border);
+}
+
+/* Gradientes sutiles */
+.gold-gradient-text {
+    background: linear-gradient(135deg, #b39265 0%, #d4af37 50%, #c5a880 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.gold-gradient-bg {
+    background: linear-gradient(135deg, #c5a880 0%, #d4af37 100%);
+}
+
+.emerald-gradient-bg {
+    background: linear-gradient(135deg, #12372a 0%, #1a4a39 100%);
+}
+
+/* Personalización de scrollbars */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f5f2;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #c5d4c9;
+    border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #9ab4a1;
+}

@@ -1,8 +1,32 @@
+# Dependencias
 node_modules/
+vendor/
+
+# Compilación y temporales
 build/
 dist/
 coverage/
 .DS_Store
+Thumbs.db
+
+# Registros y logs
 *.log
-.env*
+*.tmp
+cookies.txt
+test_*.json
+test_connection.php
+
+# Entornos y secretos sensibles (NUNCA SUBIR A GIT)
+.env
+.env.local
+.env.*.local
+*.secret
+*.pem
+*.key
+
+# Excepciones
 !.env.example
+
+# IDEs
+.vscode/
+.idea/
