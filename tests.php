@@ -6,6 +6,7 @@
 require_once __DIR__ . '/config/app.php';
 require_once __DIR__ . '/tests/AvailabilityTest.php';
 require_once __DIR__ . '/tests/BookingTest.php';
+require_once __DIR__ . '/tests/JwtTest.php';
 
 $startTime = microtime(true);
 $availSuite = new AvailabilityTest();
@@ -14,7 +15,10 @@ $availResults = $availSuite->runAll();
 $bookingSuite = new BookingTest();
 $bookingResults = $bookingSuite->runAll();
 
-$allResults = array_merge($availResults, $bookingResults);
+$jwtSuite = new JwtTest();
+$jwtResults = $jwtSuite->runAll();
+
+$allResults = array_merge($availResults, $bookingResults, $jwtResults);
 $total = count($allResults);
 $passed = count(array_filter($allResults, fn($r) => $r['passed']));
 $failed = $total - $passed;

@@ -6,6 +6,7 @@
 
 require_once __DIR__ . '/AvailabilityTest.php';
 require_once __DIR__ . '/BookingTest.php';
+require_once __DIR__ . '/JwtTest.php';
 
 echo "\n=======================================================\n";
 echo "  MIRACLE SPA - SUITE DE PRUEBAS AUTOMATIZADAS (PHP)\n";
@@ -19,7 +20,10 @@ $availResults = $availSuite->runAll();
 $bookingSuite = new BookingTest();
 $bookingResults = $bookingSuite->runAll();
 
-$allResults = array_merge($availResults, $bookingResults);
+$jwtSuite = new JwtTest();
+$jwtResults = $jwtSuite->runAll();
+
+$allResults = array_merge($availResults, $bookingResults, $jwtResults);
 
 $total = count($allResults);
 $passed = 0;

@@ -40,17 +40,29 @@ Sistema web completo y modular desarrollado en **PHP 8** y **MySQL/MariaDB**, di
 - **Bandeja de Correos (`correos.php`):** Visor con iframe para inspeccionar correos generados en tiempo real.
 - **Configuración del Spa (`configuracion.php`):** Ajustes de nombre, horarios de apertura/cierre, buffer de higienización, anticipación mínima y servidor SMTP con prueba en vivo.
 
+### 5. Autenticación con JWT (JSON Web Tokens - RFC 7519)
+- **Generación de Tokens HS256:** Cifrado simétrico HMAC-SHA256 con payload estándar (`iss`, `iat`, `exp`, `sub`, `username`, `role`).
+- **Autenticación Híbrida:** Soporte simultáneo para sesiones web de navegador y encabezados REST `Authorization: Bearer <token>`.
+- **Endpoints de la API:**
+  - `POST /api/auth/login.php`: Recibe credenciales y emite el token JWT con expiración de 24h.
+  - `GET /api/auth/verify.php`: Valida la firma criptográfica y retorna los datos del token vigente.
+
 ---
 
 ## 🧪 Pruebas Automatizadas
 
-El sistema cuenta con una suite de **21 pruebas unitarias y de integración** que cubren:
+El sistema cuenta con una suite de **28 pruebas unitarias y de integración** que cubren:
 1. Lógica matemática de tiempos y duraciones.
 2. Detección de colisiones temporales considerando buffers de higienización.
 3. Validación estricta contra dobles reservas.
 4. Concurrencia de reservas simultáneas para diferentes especialistas.
 5. Políticas de cancelación anticipada.
 6. Liberación de cupos tras cancelación.
+7. Generación y estructura de tokens JWT (HS256 de 3 segmentos).
+8. Validación de claims de identidad de usuario en JWT.
+9. Detección y rechazo de tokens manipulados/adulterados.
+10. Rechazo estricto de tokens JWT expirados.
+11. Codificación segura Base64Url sin colisiones.
 
 ### Ejecutar Pruebas:
 - **En el Navegador:** Abre `http://localhost/miraclespa/tests.php`
