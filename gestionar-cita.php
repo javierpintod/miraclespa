@@ -39,7 +39,7 @@ $spaPhone = AppConfig::getSetting('spa_phone', '+1 (555) 789-2345');
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/app.css">
+    <link rel="stylesheet" href="assets/css/app.css?v=<?= filemtime(__DIR__ . '/assets/css/app.css') ?>">
     <style>
         .font-outfit { font-family: 'Outfit', sans-serif; }
         .font-mono-pm { font-family: 'Space Mono', monospace; }
