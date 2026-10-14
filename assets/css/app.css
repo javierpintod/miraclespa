@@ -1,362 +1,474 @@
 /* ==========================================================
-   MIRACLE SPA SANCTUARY - POSTMODERN DESIGN SYSTEM
-   Estilo: Posmodernismo / Postmodernism & Architectural Atelier
-   Rechazo al minimalismo frío ("Less is a bore"), tipografía
-   expresiva (Syne + Space Grotesk + Space Mono), paleta
-   de alto impacto (Cobalt Klein, Acid Lime, Noir y Cyber Orchid),
-   cuadrículas constructivas, sellos tipográficos y sombras táctiles.
+   MIRACLE SPA SANCTUARY - GLASSMORPHISM DESIGN SYSTEM
+   Estilo: Glassmorfismo / Glassmorphism & Aurora Luxury Spa
+   Efecto vidrio esmerilado translúcido, difuminado de fondo
+   (backdrop-filter), reflejos especulares suaves, orbes
+   de luz etérea, sombras difusas y bordes cristalinos.
    ========================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Space+Grotesk:wght@500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
 
 :root {
-    /* Paleta Cromática Posmodernista */
-    --pm-noir: #0D1117;
-    --pm-black: #05070A;
-    --pm-cobalt: #2548E8;
-    --pm-cobalt-light: #4A6BFF;
-    --pm-cobalt-dark: #1734B8;
-    --pm-acid: #D4FF00;
-    --pm-acid-light: #E7FF66;
-    --pm-acid-dark: #B0D600;
-    --pm-orchid: #9E00FF;
-    --pm-orchid-light: #C056FF;
-    --pm-rose: #FF2E7E;
-    --pm-rose-light: #FF66A1;
-    --pm-terracotta: #FF5A36;
-    --pm-teal: #00E5A3;
+    /* Paleta Cristal & Aurora */
+    --glass-bg: rgba(255, 255, 255, 0.68);
+    --glass-bg-subtle: rgba(255, 255, 255, 0.42);
+    --glass-bg-heavy: rgba(255, 255, 255, 0.88);
+    --glass-bg-dark: rgba(15, 23, 42, 0.75);
+    
+    --glass-border: rgba(255, 255, 255, 0.75);
+    --glass-border-subtle: rgba(255, 255, 255, 0.35);
+    --glass-border-dark: rgba(255, 255, 255, 0.12);
+    --glass-border-glow: rgba(255, 255, 255, 0.95);
+    
+    --glass-shadow-sm: 0 4px 16px 0 rgba(31, 38, 135, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    --glass-shadow: 0 10px 32px 0 rgba(31, 38, 135, 0.08), inset 0 1px 1px rgba(255, 255, 255, 0.9);
+    --glass-shadow-lg: 0 20px 48px -6px rgba(31, 38, 135, 0.14), inset 0 1px 1.5px rgba(255, 255, 255, 0.95);
+    --glass-shadow-dark: 0 12px 40px 0 rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.15);
 
-    /* Fondos y Superficies Posmodernas */
-    --pm-bg: #F7F5EE;
-    --pm-bg-alt: #EFECE3;
-    --pm-surface: #FFFFFF;
-    --pm-surface-muted: #F2EFE8;
-    --pm-border: #0D1117;
-
-    /* Compatibilidad retrospectiva con variables previas */
-    --memphis-pink: var(--pm-rose);
-    --memphis-pink-light: var(--pm-rose-light);
-    --memphis-yellow: var(--pm-acid);
-    --memphis-yellow-light: var(--pm-acid-light);
-    --memphis-blue: var(--pm-cobalt);
-    --memphis-blue-light: var(--pm-cobalt-light);
-    --memphis-teal: var(--pm-teal);
-    --memphis-purple: var(--pm-orchid);
-    --memphis-dark: var(--pm-noir);
-    --memphis-black: var(--pm-black);
-    --memphis-bg: var(--pm-bg);
-    --memphis-card: var(--pm-surface);
-    --memphis-cream: var(--pm-surface-muted);
+    /* Tonos Joya Spa */
+    --glass-emerald: #0D9488;
+    --glass-emerald-light: #14B8A6;
+    --glass-emerald-gradient: linear-gradient(135deg, #0D9488 0%, #059669 100%);
+    --glass-cyan: #0284C7;
+    --glass-violet: #7C3AED;
+    --glass-rose: #E11D48;
+    --glass-amber: #D97706;
+    
+    /* Textos con alto contraste para legibilidad sobre cristal */
+    --text-primary: #0F172A;
+    --text-secondary: #334155;
+    --text-muted: #64748B;
 }
 
-/* Tipografías Posmodernistas */
-.font-syne {
-    font-family: 'Syne', system-ui, -apple-system, sans-serif;
-    letter-spacing: -0.02em;
+/* Tipografías */
+.font-outfit {
+    font-family: 'Outfit', 'Plus Jakarta Sans', system-ui, sans-serif;
+    letter-spacing: -0.015em;
 }
 
 .font-space {
-    font-family: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+    font-family: 'Outfit', sans-serif;
+}
+
+.font-syne {
+    font-family: 'Outfit', sans-serif;
 }
 
 .font-mono-pm {
     font-family: 'Space Mono', monospace;
 }
 
+/* Fondo con Aurora Mesh Gradient Lujoso */
 body {
-    background-color: var(--pm-bg);
-    color: var(--pm-noir);
+    background-color: #F8FAFC;
+    color: var(--text-primary);
     font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
     -webkit-font-smoothing: antialiased;
-    /* Retícula arquitectónica posmodernista milimétrica */
+    min-height: 100vh;
     background-image: 
-        linear-gradient(to right, rgba(13, 17, 23, 0.05) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(13, 17, 23, 0.05) 1px, transparent 1px);
-    background-size: 32px 32px;
+        radial-gradient(at 0% 0%, rgba(204, 251, 241, 0.6) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(224, 231, 255, 0.65) 0px, transparent 50%),
+        radial-gradient(at 50% 50%, rgba(243, 232, 255, 0.45) 0px, transparent 60%),
+        radial-gradient(at 0% 100%, rgba(254, 226, 226, 0.45) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(207, 250, 254, 0.55) 0px, transparent 50%);
+    background-attachment: fixed;
+    background-size: cover;
 }
 
-/* Sombras Duras & Desplazadas Posmodernistas (Hard Offset Shadows) */
-.pm-shadow-xs,
-.memphis-shadow-xs {
-    box-shadow: 2px 2px 0px var(--pm-noir);
+/* Orbes Decorativos de Aurora Glassmorfismo */
+.aurora-orb {
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(60px);
+    pointer-events: none;
+    opacity: 0.65;
+    z-index: 0;
 }
 
-.pm-shadow-sm,
-.memphis-shadow-sm {
-    box-shadow: 3px 3px 0px var(--pm-noir);
+.aurora-orb-teal {
+    background: radial-gradient(circle, rgba(20, 184, 166, 0.45) 0%, rgba(13, 148, 136, 0.05) 70%);
 }
 
+.aurora-orb-violet {
+    background: radial-gradient(circle, rgba(167, 139, 250, 0.4) 0%, rgba(124, 58, 237, 0.05) 70%);
+}
+
+.aurora-orb-rose {
+    background: radial-gradient(circle, rgba(251, 113, 133, 0.35) 0%, rgba(225, 29, 72, 0.05) 70%);
+}
+
+/* ==========================================================
+   COMPONENTES Y TARJETAS GLASSMORFISTAS
+   ========================================================== */
+
+.glass-card,
+.pm-card,
+.memphis-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(18px) saturate(180%);
+    -webkit-backdrop-filter: blur(18px) saturate(180%);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    box-shadow: var(--glass-shadow);
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-card:hover,
+.pm-card:hover,
+.memphis-card:hover {
+    background: rgba(255, 255, 255, 0.78);
+    box-shadow: var(--glass-shadow-lg);
+    border-color: rgba(255, 255, 255, 0.95);
+    transform: translateY(-2px);
+}
+
+.glass-card-subtle {
+    background: var(--glass-bg-subtle);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid var(--glass-border-subtle);
+    border-radius: 20px;
+    box-shadow: var(--glass-shadow-sm);
+}
+
+.glass-card-dark {
+    background: var(--glass-bg-dark);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid var(--glass-border-dark);
+    border-radius: 24px;
+    box-shadow: var(--glass-shadow-dark);
+    color: #FFFFFF;
+}
+
+/* Sombras Suaves Translúcidas (Reemplazo de Sombras Duras) */
+.glass-shadow,
 .pm-shadow,
 .memphis-shadow {
-    box-shadow: 5px 5px 0px var(--pm-noir);
+    box-shadow: var(--glass-shadow);
 }
 
+.glass-shadow-sm,
+.pm-shadow-sm,
+.memphis-shadow-sm {
+    box-shadow: var(--glass-shadow-sm);
+}
+
+.glass-shadow-lg,
 .pm-shadow-lg,
 .memphis-shadow-lg {
-    box-shadow: 7px 7px 0px var(--pm-noir);
+    box-shadow: var(--glass-shadow-lg);
+}
+
+.pm-shadow-xs,
+.memphis-shadow-xs {
+    box-shadow: 0 2px 8px 0 rgba(31, 38, 135, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.8);
 }
 
 .pm-shadow-cobalt,
 .memphis-shadow-blue {
-    box-shadow: 5px 5px 0px var(--pm-cobalt);
+    box-shadow: 0 8px 24px rgba(2, 132, 199, 0.22);
 }
 
 .pm-shadow-acid,
 .memphis-shadow-yellow {
-    box-shadow: 5px 5px 0px var(--pm-acid);
+    box-shadow: 0 8px 24px rgba(20, 184, 166, 0.22);
 }
 
 .pm-shadow-rose,
 .memphis-shadow-pink {
-    box-shadow: 5px 5px 0px var(--pm-rose);
+    box-shadow: 0 8px 24px rgba(225, 29, 72, 0.22);
 }
 
-/* Sombra doble multicapa posmodernista */
-.pm-shadow-layered {
-    box-shadow: 4px 4px 0px var(--pm-noir), 8px 8px 0px var(--pm-acid);
-}
+/* ==========================================================
+   BOTONES GLASSMORFISTAS
+   ========================================================== */
 
-.pm-shadow-layered-cobalt {
-    box-shadow: 4px 4px 0px var(--pm-noir), 8px 8px 0px var(--pm-cobalt);
-}
-
-/* Tarjetas Arquitectónicas Posmodernas */
-.pm-card,
-.memphis-card {
-    background: var(--pm-surface);
-    border: 2px solid var(--pm-noir);
-    border-radius: 14px;
-    box-shadow: 5px 5px 0px var(--pm-noir);
-    transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.15s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.pm-card:hover,
-.memphis-card:hover {
-    transform: translate(-2px, -2px);
-    box-shadow: 7px 7px 0px var(--pm-noir);
-}
-
-/* Botones Posmodernistas: Táctiles, Expresivos, Asertivos */
+.btn-glass-primary,
 .btn-pm-primary,
 .btn-memphis-primary {
-    background-color: var(--pm-cobalt);
+    background: linear-gradient(135deg, #0D9488 0%, #059669 100%);
     color: #FFFFFF;
-    border: 2px solid var(--pm-noir);
-    font-weight: 800;
-    box-shadow: 4px 4px 0px var(--pm-noir);
-    transition: all 0.12s cubic-bezier(0.16, 1, 0.3, 1);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-top: 1px solid rgba(255, 255, 255, 0.65);
+    font-weight: 700;
+    font-family: 'Outfit', sans-serif;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px -2px rgba(13, 148, 136, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     display: inline-flex;
     align-items: center;
     justify-content: center;
 }
 
+.btn-glass-primary:hover,
 .btn-pm-primary:hover,
 .btn-memphis-primary:hover {
-    background-color: var(--pm-cobalt-light);
-    transform: translate(-2px, -2px);
-    box-shadow: 6px 6px 0px var(--pm-noir);
+    background: linear-gradient(135deg, #14B8A6 0%, #0D9488 100%);
+    box-shadow: 0 12px 28px -2px rgba(13, 148, 136, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    transform: translateY(-1.5px);
 }
 
+.btn-glass-primary:active,
 .btn-pm-primary:active,
 .btn-memphis-primary:active {
-    transform: translate(2px, 2px);
-    box-shadow: 2px 2px 0px var(--pm-noir);
+    transform: translateY(1px);
+    box-shadow: 0 4px 12px rgba(13, 148, 136, 0.25);
 }
 
+.btn-glass-secondary,
 .btn-pm-acid,
 .btn-memphis-yellow {
-    background-color: var(--pm-acid);
-    color: var(--pm-noir);
-    border: 2px solid var(--pm-noir);
-    font-weight: 800;
-    box-shadow: 4px 4px 0px var(--pm-noir);
-    transition: all 0.12s cubic-bezier(0.16, 1, 0.3, 1);
+    background: rgba(255, 255, 255, 0.72);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: #0F172A;
+    border: 1px solid rgba(255, 255, 255, 0.85);
+    border-top: 1px solid rgba(255, 255, 255, 0.95);
+    font-weight: 700;
+    font-family: 'Outfit', sans-serif;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px -2px rgba(31, 38, 135, 0.07), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     display: inline-flex;
     align-items: center;
     justify-content: center;
 }
 
+.btn-glass-secondary:hover,
 .btn-pm-acid:hover,
 .btn-memphis-yellow:hover {
-    background-color: var(--pm-acid-light);
-    transform: translate(-2px, -2px);
-    box-shadow: 6px 6px 0px var(--pm-noir);
+    background: rgba(255, 255, 255, 0.92);
+    box-shadow: 0 10px 24px -2px rgba(31, 38, 135, 0.12), inset 0 1px 0 #FFFFFF;
+    transform: translateY(-1.5px);
 }
 
-.btn-pm-acid:active,
-.btn-memphis-yellow:active {
-    transform: translate(2px, 2px);
-    box-shadow: 2px 2px 0px var(--pm-noir);
+.btn-glass-rose,
+.btn-pm-rose,
+.btn-memphis-blue {
+    background: linear-gradient(135deg, #E11D48 0%, #BE123C 100%);
+    color: #FFFFFF;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-top: 1px solid rgba(255, 255, 255, 0.65);
+    font-weight: 700;
+    font-family: 'Outfit', sans-serif;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px -2px rgba(225, 29, 72, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    transition: all 0.2s ease;
+}
+
+.btn-glass-rose:hover,
+.btn-pm-rose:hover,
+.btn-memphis-blue:hover {
+    background: linear-gradient(135deg, #F43F5E 0%, #E11D48 100%);
+    box-shadow: 0 12px 28px -2px rgba(225, 29, 72, 0.45);
+    transform: translateY(-1.5px);
 }
 
 .btn-pm-dark {
-    background-color: var(--pm-noir);
+    background: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(12px);
     color: #FFFFFF;
-    border: 2px solid var(--pm-noir);
-    font-weight: 800;
-    box-shadow: 4px 4px 0px var(--pm-acid);
-    transition: all 0.12s cubic-bezier(0.16, 1, 0.3, 1);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    font-weight: 700;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s ease;
 }
 
 .btn-pm-dark:hover {
-    background-color: var(--pm-black);
-    color: var(--pm-acid);
-    transform: translate(-2px, -2px);
-    box-shadow: 6px 6px 0px var(--pm-acid);
+    background: rgba(15, 23, 42, 0.95);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-1.5px);
 }
 
-.btn-pm-dark:active {
-    transform: translate(2px, 2px);
-    box-shadow: 2px 2px 0px var(--pm-acid);
-}
+/* ==========================================================
+   INSIGNIAS / BADGES GLASSMORFISTAS
+   ========================================================== */
 
-.btn-pm-rose,
-.btn-memphis-blue {
-    background-color: var(--pm-rose);
-    color: #FFFFFF;
-    border: 2px solid var(--pm-noir);
-    font-weight: 800;
-    box-shadow: 4px 4px 0px var(--pm-noir);
-    transition: all 0.12s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.btn-pm-rose:hover,
-.btn-memphis-blue:hover {
-    background-color: var(--pm-rose-light);
-    transform: translate(-2px, -2px);
-    box-shadow: 6px 6px 0px var(--pm-noir);
-}
-
-.btn-pm-rose:active,
-.btn-memphis-blue:active {
-    transform: translate(2px, 2px);
-    box-shadow: 2px 2px 0px var(--pm-noir);
-}
-
-/* Sellos / Stickers Posmodernistas */
+.glass-badge,
 .pm-stamp,
 .pm-sticker,
 .memphis-sticker {
     display: inline-flex;
     align-items: center;
-    gap: 4px;
-    padding: 3px 10px;
+    gap: 5px;
+    padding: 4px 12px;
     font-size: 11px;
-    font-weight: 800;
+    font-weight: 700;
     border-radius: 9999px;
-    border: 2px solid var(--pm-noir);
-    box-shadow: 2.5px 2.5px 0px var(--pm-noir);
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    font-family: 'Space Grotesk', sans-serif;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    box-shadow: 0 2px 10px rgba(31, 38, 135, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    font-family: 'Outfit', sans-serif;
+    letter-spacing: 0.02em;
 }
 
-.sticker-pink {
-    background-color: var(--pm-rose);
-    color: #FFFFFF;
+.sticker-yellow,
+.glass-badge-teal {
+    background: rgba(204, 251, 241, 0.65);
+    color: #0F766E;
+    border-color: rgba(13, 148, 136, 0.3);
 }
 
-.sticker-yellow {
-    background-color: var(--pm-acid);
-    color: var(--pm-noir);
+.sticker-blue,
+.glass-badge-blue {
+    background: rgba(224, 242, 254, 0.65);
+    color: #0369A1;
+    border-color: rgba(2, 132, 199, 0.3);
 }
 
-.sticker-blue {
-    background-color: var(--pm-cobalt);
-    color: #FFFFFF;
+.sticker-pink,
+.glass-badge-rose {
+    background: rgba(255, 228, 230, 0.65);
+    color: #BE123C;
+    border-color: rgba(225, 29, 72, 0.3);
+}
+
+.sticker-purple,
+.glass-badge-purple {
+    background: rgba(243, 232, 255, 0.65);
+    color: #6D28D9;
+    border-color: rgba(124, 58, 237, 0.3);
 }
 
 .sticker-teal {
-    background-color: var(--pm-teal);
-    color: var(--pm-noir);
-}
-
-.sticker-purple {
-    background-color: var(--pm-orchid);
-    color: #FFFFFF;
+    background: rgba(204, 251, 241, 0.65);
+    color: #0F766E;
+    border-color: rgba(13, 148, 136, 0.3);
 }
 
 .sticker-dark {
-    background-color: var(--pm-noir);
-    color: var(--pm-acid);
+    background: rgba(15, 23, 42, 0.75);
+    color: #F8FAFC;
+    border-color: rgba(255, 255, 255, 0.2);
 }
 
-/* Indicadores de Paso Posmodernistas (Wizard) */
+/* ==========================================================
+   WIZARD STEPS GLASSMORFISMO
+   ========================================================== */
+
 .wizard-step-bullet {
-    width: 38px;
-    height: 38px;
-    border-radius: 12px;
+    width: 40px;
+    height: 40px;
+    border-radius: 9999px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: 800;
-    font-family: 'Space Mono', monospace;
+    font-weight: 700;
+    font-family: 'Outfit', sans-serif;
     font-size: 14px;
-    border: 2px solid var(--pm-noir);
-    transition: all 0.2s ease;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .wizard-step-bullet.active {
-    background-color: var(--pm-acid);
-    color: var(--pm-noir);
-    box-shadow: 3px 3px 0px var(--pm-noir);
-    transform: scale(1.08) rotate(-2deg);
+    background: linear-gradient(135deg, #0D9488 0%, #059669 100%);
+    color: #FFFFFF;
+    border: 2px solid rgba(255, 255, 255, 0.9);
+    box-shadow: 0 0 20px rgba(13, 148, 136, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    transform: scale(1.12);
 }
 
 .wizard-step-bullet.completed {
-    background-color: var(--pm-cobalt);
-    color: #FFFFFF;
-    box-shadow: 2px 2px 0px var(--pm-noir);
+    background: rgba(13, 148, 136, 0.15);
+    color: #0D9488;
+    border: 1.5px solid rgba(13, 148, 136, 0.4);
 }
 
 .wizard-step-bullet.inactive {
-    background-color: #FFFFFF;
-    color: #6B7280;
-    border-color: #9CA3AF;
+    background: rgba(255, 255, 255, 0.45);
+    color: #94A3B8;
+    border: 1px solid rgba(255, 255, 255, 0.6);
 }
 
-/* Chips de Horario Posmodernistas */
+/* ==========================================================
+   CHIPS DE HORARIO (TIME CHIP)
+   ========================================================== */
+
 .time-chip {
-    border: 2px solid var(--pm-noir) !important;
-    background: #FFFFFF;
-    color: var(--pm-noir);
-    font-weight: 700;
-    box-shadow: 3px 3px 0px var(--pm-noir);
-    transition: all 0.12s ease;
+    border: 1px solid rgba(255, 255, 255, 0.8) !important;
+    background: rgba(255, 255, 255, 0.6) !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: #0F172A;
+    font-weight: 600;
+    border-radius: 16px !important;
+    box-shadow: 0 4px 14px rgba(31, 38, 135, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     cursor: pointer;
 }
 
 .time-chip:hover {
-    background-color: var(--pm-acid-light);
-    transform: translate(-1.5px, -1.5px);
-    box-shadow: 4.5px 4.5px 0px var(--pm-noir);
+    background: rgba(255, 255, 255, 0.85) !important;
+    border-color: rgba(13, 148, 136, 0.4) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(13, 148, 136, 0.12);
 }
 
 .time-chip.selected {
-    background-color: var(--pm-cobalt) !important;
+    background: linear-gradient(135deg, #0D9488 0%, #059669 100%) !important;
     color: #FFFFFF !important;
-    border-color: var(--pm-noir) !important;
-    transform: translate(-2px, -2px);
-    box-shadow: 4px 4px 0px var(--pm-noir) !important;
+    border-color: rgba(255, 255, 255, 0.6) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(13, 148, 136, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.4) !important;
 }
 
 .time-chip.selected div {
     color: #FFFFFF !important;
 }
 
-/* Tarjeta de Servicio Interactiva */
+/* ==========================================================
+   TARJETAS INTERACTIVAS DE SERVICIOS & ESPECIALISTAS
+   ========================================================== */
+
 .service-card {
-    transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.75);
+    border-radius: 20px;
+    box-shadow: 0 6px 20px rgba(31, 38, 135, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .service-card:hover {
-    border-color: var(--pm-noir);
-    background-color: #FFFFFF;
-    transform: translate(-2px, -2px);
-    box-shadow: 5px 5px 0px var(--pm-noir);
+    background: rgba(255, 255, 255, 0.85);
+    border-color: rgba(13, 148, 136, 0.5);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(13, 148, 136, 0.12);
 }
 
-/* Cinta Ticker Posmodernista (Marquee) */
+.prof-card {
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-radius: 20px;
+    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Inputs con Cristal Esmerilado */
+input, select, textarea {
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.85);
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.03);
+    border-radius: 14px;
+    transition: all 0.2s ease;
+}
+
+input:focus, select:focus, textarea:focus {
+    background: rgba(255, 255, 255, 0.95);
+    border-color: rgba(13, 148, 136, 0.6) !important;
+    box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.18), inset 0 1px 2px rgba(0, 0, 0, 0.02) !important;
+}
+
+/* ==========================================================
+   CINTILLO KINÉTICO GLASSMORFISMO
+   ========================================================== */
+
 .pm-marquee-wrap {
     overflow: hidden;
     white-space: nowrap;
@@ -364,7 +476,7 @@ body {
 
 .pm-marquee-track {
     display: inline-flex;
-    animation: marquee 26s linear infinite;
+    animation: marquee 28s linear infinite;
 }
 
 @keyframes marquee {
@@ -372,51 +484,72 @@ body {
     100% { transform: translateX(-50%); }
 }
 
-/* Elementos arquitectónicos decorativos posmodernos */
-.pm-crosshair {
-    position: relative;
-}
-
-.pm-crosshair::before {
-    content: "+";
-    position: absolute;
-    font-family: 'Space Mono', monospace;
-    font-weight: bold;
-    color: var(--pm-noir);
-    opacity: 0.6;
-}
-
-/* Scrollbar con carácter posmodernista */
+/* Scrollbars Glassmorfistas */
 ::-webkit-scrollbar {
     width: 8px;
     height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-    background: var(--pm-bg);
-    border-left: 1px solid rgba(13, 17, 23, 0.1);
+    background: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(8px);
 }
 
 ::-webkit-scrollbar-thumb {
-    background: var(--pm-noir);
-    border: 1px solid var(--pm-bg);
+    background: rgba(13, 148, 136, 0.4);
+    border-radius: 9999px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: var(--pm-cobalt);
+    background: rgba(13, 148, 136, 0.7);
 }
 
-/* Badge de Estado en Tablas */
+/* Badges de Estado Glassmorfistas */
 .pm-status-badge {
     display: inline-flex;
     align-items: center;
     gap: 4px;
-    padding: 3px 8px;
+    padding: 3px 10px;
     font-size: 11px;
-    font-weight: 800;
-    border-radius: 6px;
-    border: 2px solid var(--pm-noir);
-    box-shadow: 2px 2px 0px var(--pm-noir);
-    font-family: 'Space Mono', monospace;
-    letter-spacing: -0.01em;
+    font-weight: 700;
+    border-radius: 9999px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
+
+/* Paneles & Modales de Cristal Esmerilado */
+.glass-panel {
+    background: rgba(255, 255, 255, 0.72);
+    backdrop-filter: blur(18px) saturate(180%);
+    -webkit-backdrop-filter: blur(18px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 10px 32px 0 rgba(31, 38, 135, 0.08);
+}
+
+.glass-modal {
+    background: rgba(255, 255, 255, 0.88);
+    backdrop-filter: blur(24px) saturate(200%);
+    -webkit-backdrop-filter: blur(24px) saturate(200%);
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    box-shadow: 0 25px 60px -15px rgba(15, 23, 42, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.95);
+}
+
+.glass-header-dark {
+    background: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.glass-subtle-box {
+    background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    border-radius: 18px;
+}
+

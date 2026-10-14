@@ -134,11 +134,11 @@ $services = Service::getAll(false); // todos, activos e inactivos
 </div>
 
 <!-- MODAL CREAR / EDITAR SERVICIO -->
-<div id="modal-service" class="fixed inset-0 bg-[#0D1117]/60 backdrop-blur-xs z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-white rounded-2xl max-w-lg w-full p-6 pm-shadow-lg border-2 border-[#0D1117]">
-        <div class="flex items-center justify-between pb-3 border-b-2 border-[#0D1117] mb-4">
-            <h3 class="font-syne font-bold text-lg text-[#0D1117]" id="modal-service-title">Nuevo Servicio</h3>
-            <button type="button" onclick="closeServiceModal()" class="text-gray-400 hover:text-gray-900 text-2xl font-bold leading-none">&times;</button>
+<div id="modal-service" class="fixed inset-0 bg-slate-950/40 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+    <div class="glass-modal rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-white/80">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-200/60 mb-4">
+            <h3 class="font-outfit font-extrabold text-lg text-slate-900" id="modal-service-title">Nuevo Servicio</h3>
+            <button type="button" onclick="closeServiceModal()" class="w-8 h-8 rounded-full bg-slate-200/50 hover:bg-slate-200 text-slate-600 flex items-center justify-center text-xl font-bold leading-none transition-colors">&times;</button>
         </div>
 
         <form method="POST" id="service-form" class="space-y-4 text-xs font-mono-pm">

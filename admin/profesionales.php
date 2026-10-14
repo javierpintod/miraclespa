@@ -89,17 +89,17 @@ $professionals = Professional::getAll(false);
             $assignedIds = array_column($assignedServices, 'id');
             $schedules = Schedule::getByProfessional((int)$p['id']);
         ?>
-            <div class="bg-white rounded-2xl border-2 border-[#0D1117] p-6 pm-shadow-sm flex flex-col justify-between hover:pm-shadow transition-all">
+            <div class="glass-card p-6 rounded-3xl border border-white/80 shadow-md flex flex-col justify-between hover:shadow-xl transition-all">
                 <div>
                     <!-- Encabezado con Avatar -->
                     <div class="flex items-start justify-between gap-3 mb-4">
                         <div class="flex items-center gap-3">
-                            <span class="w-12 h-12 rounded-xl bg-[#2548E8] text-white font-syne font-bold text-base flex items-center justify-center shrink-0 border-2 border-[#0D1117] pm-shadow-xs">
+                            <span class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-teal-600 to-cyan-600 text-white font-outfit font-bold text-base flex items-center justify-center shrink-0 shadow-sm border border-white/30">
                                 <?= substr($p['name'], 0, 1) ?>
                             </span>
                             <div>
-                                <h3 class="font-bold text-gray-900 text-sm"><?= htmlspecialchars($p['name']) ?></h3>
-                                <p class="text-[11px] text-[#a3804c] font-semibold"><?= htmlspecialchars($p['title']) ?></p>
+                                <h3 class="font-bold text-slate-900 text-sm"><?= htmlspecialchars($p['name']) ?></h3>
+                                <p class="text-[11px] text-teal-700 font-semibold"><?= htmlspecialchars($p['title']) ?></p>
                                 <span class="text-[11px] text-amber-500 font-bold">★ <?= number_format($p['rating'], 2) ?></span>
                             </div>
                         </div>

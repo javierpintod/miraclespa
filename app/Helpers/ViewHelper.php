@@ -36,29 +36,29 @@ class ViewHelper {
         $badges = [
             'confirmada' => [
                 'label' => '✓ Confirmada',
-                'class' => 'bg-[#00E5A3] text-[#0D1117] border-2 border-[#0D1117]'
+                'class' => 'bg-emerald-500/15 text-emerald-800 border border-emerald-500/30 shadow-[0_2px_10px_rgba(16,185,129,0.15)]'
             ],
             'pendiente' => [
                 'label' => '⏱ Pendiente',
-                'class' => 'bg-[#D4FF00] text-[#0D1117] border-2 border-[#0D1117]'
+                'class' => 'bg-amber-500/15 text-amber-800 border border-amber-500/30 shadow-[0_2px_10px_rgba(245,158,11,0.15)]'
             ],
             'completada' => [
                 'label' => '★ Completada',
-                'class' => 'bg-[#2548E8] text-white border-2 border-[#0D1117]'
+                'class' => 'bg-sky-500/15 text-sky-800 border border-sky-500/30 shadow-[0_2px_10px_rgba(14,165,233,0.15)]'
             ],
             'cancelada' => [
                 'label' => '✕ Cancelada',
-                'class' => 'bg-[#FF2E7E] text-white border-2 border-[#0D1117]'
+                'class' => 'bg-rose-500/15 text-rose-800 border border-rose-500/30 shadow-[0_2px_10px_rgba(244,63,94,0.15)]'
             ],
             'reprogramada' => [
                 'label' => '↻ Reprogramada',
-                'class' => 'bg-[#9E00FF] text-white border-2 border-[#0D1117]'
+                'class' => 'bg-purple-500/15 text-purple-800 border border-purple-500/30 shadow-[0_2px_10px_rgba(168,85,247,0.15)]'
             ],
         ];
 
-        $info = $badges[$status] ?? ['label' => ucfirst($status), 'class' => 'bg-white text-[#0D1117] border-2 border-[#0D1117]'];
+        $info = $badges[$status] ?? ['label' => ucfirst($status), 'class' => 'bg-white/60 text-slate-800 border border-white/80 shadow-sm'];
 
-        return "<span class='inline-flex items-center px-2.5 py-1 rounded-md text-xs font-extrabold font-mono uppercase tracking-wide pm-shadow-xs {$info['class']}'>
+        return "<span class='inline-flex items-center px-3 py-1 rounded-full text-xs font-bold tracking-wide backdrop-blur-md {$info['class']}'>
                     {$info['label']}
                 </span>";
     }

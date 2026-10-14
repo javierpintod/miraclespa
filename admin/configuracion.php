@@ -208,14 +208,14 @@ $settings = AppConfig::getAllSettings();
     </form>
 
     <!-- Formulario de Envío de Correo de Prueba -->
-    <div class="bg-white rounded-2xl border-2 border-[#0D1117] p-6 pm-shadow-sm">
-        <h3 class="font-syne font-bold text-base text-[#0D1117] mb-2">Probar Envío de Correo Electrónico</h3>
-        <p class="text-xs text-gray-500 mb-4 font-medium">Ingresa un correo de destino para disparar una prueba con las configuraciones actuales.</p>
+    <div class="glass-card rounded-3xl border border-white/80 p-6 sm:p-7 shadow-md">
+        <h3 class="font-outfit font-extrabold text-base text-slate-900 mb-2">Probar Envío de Correo Electrónico</h3>
+        <p class="text-xs text-slate-600 mb-4 font-medium">Ingresa un correo de destino para disparar una prueba con las configuraciones actuales.</p>
 
         <form method="POST" class="flex flex-col sm:flex-row gap-3">
             <input type="hidden" name="action" value="send_test_email">
-            <input type="email" name="test_recipient" required placeholder="tu-correo@ejemplo.com" class="flex-1 px-3 py-2 rounded-xl border-2 border-[#0D1117] text-xs font-mono-pm focus:outline-none focus:ring-2 focus:ring-[#2548E8]">
-            <button type="submit" class="btn-pm-acid px-5 py-2.5 rounded-xl text-xs font-bold font-space shrink-0">
+            <input type="email" name="test_recipient" required placeholder="tu-correo@ejemplo.com" class="flex-1 px-4 py-2.5 rounded-xl border border-white/80 bg-white/80 text-xs font-mono-pm focus:outline-none focus:ring-2 focus:ring-teal-500">
+            <button type="submit" class="btn-glass-secondary px-5 py-2.5 rounded-xl text-xs font-bold font-outfit shrink-0">
                 Enviar Correo de Prueba
             </button>
         </form>

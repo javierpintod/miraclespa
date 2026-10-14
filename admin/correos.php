@@ -104,14 +104,14 @@ $mailDriver = AppConfig::getSetting('mail_driver', 'simulated');
 </div>
 
 <!-- MODAL VISOR DE CORREO HTML -->
-<div id="modal-email-preview" class="fixed inset-0 bg-[#0D1117]/60 backdrop-blur-xs z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-white rounded-2xl max-w-3xl w-full h-[85vh] flex flex-col pm-shadow-lg border-2 border-[#0D1117] overflow-hidden">
-        <div class="p-4 bg-[#0D1117] text-white flex items-center justify-between border-b-2 border-[#0D1117]">
+<div id="modal-email-preview" class="fixed inset-0 bg-slate-950/40 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+    <div class="glass-modal rounded-3xl max-w-3xl w-full h-[85vh] flex flex-col shadow-2xl border border-white/80 overflow-hidden">
+        <div class="p-4 bg-slate-900/85 backdrop-blur-md text-white flex items-center justify-between border-b border-white/10">
             <div class="flex items-center gap-2">
-                <span class="text-base text-[#D4FF00]">✉</span>
-                <span class="font-syne font-bold text-sm">Vista Previa de Correo Notificado</span>
+                <span class="text-base text-teal-400">✉</span>
+                <span class="font-outfit font-bold text-sm">Vista Previa de Correo Notificado</span>
             </div>
-            <button type="button" onclick="closeEmailPreview()" class="text-gray-300 hover:text-white text-2xl font-bold leading-none">&times;</button>
+            <button type="button" onclick="closeEmailPreview()" class="w-8 h-8 rounded-full bg-slate-800 text-slate-300 hover:text-white flex items-center justify-center text-xl font-bold leading-none transition-colors">&times;</button>
         </div>
 
         <div class="flex-1 bg-gray-100 p-2 overflow-hidden">
