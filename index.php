@@ -411,6 +411,67 @@ $spaPhone = AppConfig::getSetting('spa_phone', '+1 (555) 789-2345');
                                 <textarea id="client-notes" rows="2" placeholder="Sensibilidad a productos, alergias, diseño especial..." class="w-full px-4 py-3 rounded-xl text-sm font-medium"></textarea>
                             </div>
 
+                            <!-- SELECCIÓN DE MÉTODO DE PAGO -->
+                            <div class="pt-2">
+                                <label class="block text-xs font-outfit font-bold uppercase tracking-wider text-slate-700 mb-2">Modalidad de Pago *</label>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                    <label id="payment-choice-stripe-label" class="relative flex items-start gap-3 p-3.5 rounded-2xl border-2 border-teal-500 bg-teal-50/70 shadow-xs cursor-pointer transition-all">
+                                        <input type="radio" name="payment_choice" value="stripe" checked class="mt-1 text-teal-600 focus:ring-teal-500">
+                                        <div>
+                                            <span class="block font-outfit font-bold text-xs text-slate-900 flex items-center gap-1.5">
+                                                <span>💳</span> Pagar en Línea con Stripe
+                                            </span>
+                                            <span class="block text-[11px] text-slate-500 mt-0.5">Tarjeta de crédito o débito con confirmación instantánea.</span>
+                                        </div>
+                                    </label>
+
+                                    <label id="payment-choice-venue-label" class="relative flex items-start gap-3 p-3.5 rounded-2xl border-2 border-white/80 bg-white/60 shadow-xs cursor-pointer transition-all hover:bg-white/80">
+                                        <input type="radio" name="payment_choice" value="venue" class="mt-1 text-teal-600 focus:ring-teal-500">
+                                        <div>
+                                            <span class="block font-outfit font-bold text-xs text-slate-900 flex items-center gap-1.5">
+                                                <span>🏢</span> Pagar en Sede del Spa
+                                            </span>
+                                            <span class="block text-[11px] text-slate-500 mt-0.5">Abona de forma presencial (efectivo o tarjeta) el día del turno.</span>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- CAMPOS DE TARJETA PARA PAGO EN LÍNEA -->
+                            <div id="stripe-card-fields-container" class="glass-subtle-box p-4 rounded-2xl space-y-3 border border-white/80">
+                                <div class="flex items-center justify-between pb-2 border-b border-slate-200/50">
+                                    <span class="text-xs font-outfit font-bold text-slate-800 flex items-center gap-2">
+                                        <span class="w-6 h-6 rounded-lg bg-teal-600 text-white flex items-center justify-center text-xs">🔒</span>
+                                        Datos de Tarjeta (Stripe 256-bit SSL)
+                                    </span>
+                                    <span id="booking-card-brand" class="font-mono-pm text-[10px] text-teal-700 font-bold uppercase bg-white/80 px-2 py-0.5 rounded-md border border-white">Stripe Segura</span>
+                                </div>
+
+                                <div>
+                                    <label class="block text-[11px] font-mono-pm font-bold uppercase text-slate-700 mb-1">Nombre del Titular *</label>
+                                    <input type="text" id="booking-cardholder" placeholder="Nombre completo como en el plástico" class="w-full px-4 py-2.5 rounded-xl border border-white/80 bg-white/80 text-xs focus:ring-2 focus:ring-teal-500 focus:outline-none">
+                                </div>
+
+                                <div>
+                                    <label class="block text-[11px] font-mono-pm font-bold uppercase text-slate-700 mb-1">Número de Tarjeta *</label>
+                                    <div class="relative">
+                                        <input type="text" id="booking-card-number" maxlength="19" placeholder="4242 •••• •••• 4242" class="w-full pl-4 pr-10 py-2.5 rounded-xl border border-white/80 bg-white/80 font-mono-pm text-xs focus:ring-2 focus:ring-teal-500 focus:outline-none">
+                                        <span class="absolute right-3 top-2.5 text-slate-400">💳</span>
+                                    </div>
+                                </div>
+
+                                <div class="grid grid-cols-2 gap-3">
+                                    <div>
+                                        <label class="block text-[11px] font-mono-pm font-bold uppercase text-slate-700 mb-1">Expiración (MM/AA) *</label>
+                                        <input type="text" id="booking-card-exp" maxlength="5" placeholder="MM/AA" class="w-full px-4 py-2.5 rounded-xl border border-white/80 bg-white/80 font-mono-pm text-xs text-center focus:ring-2 focus:ring-teal-500 focus:outline-none">
+                                    </div>
+                                    <div>
+                                        <label class="block text-[11px] font-mono-pm font-bold uppercase text-slate-700 mb-1">CVC / CVV *</label>
+                                        <input type="password" id="booking-card-cvc" maxlength="4" placeholder="123" class="w-full px-4 py-2.5 rounded-xl border border-white/80 bg-white/80 font-mono-pm text-xs text-center focus:ring-2 focus:ring-teal-500 focus:outline-none">
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="glass-card-subtle p-4 text-xs text-slate-700 font-medium">
                                 <label class="flex items-start gap-2.5 cursor-pointer">
                                     <input type="checkbox" required checked class="mt-0.5 rounded text-teal-600 focus:ring-teal-500">
@@ -472,6 +533,10 @@ $spaPhone = AppConfig::getSetting('spa_phone', '+1 (555) 789-2345');
                                     <span id="confirmed-price" class="font-outfit font-extrabold text-teal-800 text-base">-</span>
                                 </div>
                                 <div class="flex justify-between">
+                                    <span class="text-slate-500">Estado del Pago:</span>
+                                    <span id="confirmed-payment-status" class="font-outfit font-bold text-xs">-</span>
+                                </div>
+                                <div class="flex justify-between">
                                     <span class="text-slate-500">Correo Notificado:</span>
                                     <span id="confirmed-email" class="font-mono-pm font-bold text-slate-800 text-xs">-</span>
                                 </div>
@@ -482,6 +547,9 @@ $spaPhone = AppConfig::getSetting('spa_phone', '+1 (555) 789-2345');
                         <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
                             <a id="confirmed-manage-link" href="#" class="btn-glass-primary px-6 py-3.5 rounded-xl text-xs text-center font-outfit shadow-md">
                                 Ver y Gestionar Mi Cita (Cancelar / Reprogramar)
+                            </a>
+                            <a id="confirmed-receipt-link" href="#" target="_blank" class="hidden btn-glass-secondary px-6 py-3.5 rounded-xl text-xs text-center font-outfit shadow-md bg-emerald-500/10 text-emerald-800 border-emerald-400/40 hover:bg-emerald-500/20">
+                                🧾 Ver Recibo Digital
                             </a>
                             <button type="button" onclick="location.reload()" class="btn-glass-secondary px-5 py-3.5 rounded-xl text-xs font-outfit">
                                 Agendar Otra Cita
@@ -523,6 +591,11 @@ $spaPhone = AppConfig::getSetting('spa_phone', '+1 (555) 789-2345');
                             <div class="pt-3 border-t border-slate-200/60">
                                 <span class="text-slate-500 font-semibold block mb-0.5">Especialista Asignado:</span>
                                 <div id="summary-professional" class="font-bold text-teal-700">Cualquier especialista disponible</div>
+                            </div>
+
+                            <div class="pt-3 border-t border-slate-200/60">
+                                <span class="text-slate-500 font-semibold block mb-0.5">Modalidad de Pago:</span>
+                                <div id="summary-payment" class="font-bold text-teal-800">💳 En Línea con Stripe</div>
                             </div>
 
                             <div class="pt-3 border-t border-slate-200/60">

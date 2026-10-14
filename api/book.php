@@ -29,7 +29,8 @@ try {
             'message' => '¡Tu cita ha sido reservada con éxito!',
             'code' => $result['code'],
             'manage_token' => $result['manage_token'],
-            'appointment' => $result['appointment']
+            'appointment' => $result['appointment'],
+            'payment' => $result['payment'] ?? null
         ]);
     } else {
         http_response_code(422);

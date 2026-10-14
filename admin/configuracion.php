@@ -14,6 +14,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'spa_name', 'spa_address', 'spa_phone', 'spa_email',
             'currency_symbol', 'buffer_minutes', 'min_cancel_hours',
             'opening_time', 'closing_time', 'slot_interval_minutes',
+            'stripe_enabled', 'stripe_mode', 'stripe_publishable_key',
+            'stripe_secret_key', 'stripe_currency', 'allow_pay_on_venue',
             'mail_driver', 'smtp_host', 'smtp_port', 'smtp_user',
             'smtp_pass', 'smtp_secure', 'smtp_from_email', 'smtp_from_name'
         ];
@@ -139,10 +141,79 @@ $settings = AppConfig::getAllSettings();
             </div>
         </div>
 
-        <!-- Sección 3: Configuración de Correo Electrónico (SMTP) -->
+        <!-- Sección 3: Configuración de Pasarela de Pagos Stripe -->
+        <div id="stripe-settings" class="glass-card p-6 rounded-3xl border border-white/80 shadow-md space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-200/60 pb-3">
+                <div class="flex items-center gap-2.5">
+                    <span class="w-9 h-9 rounded-xl bg-[#635BFF] text-white flex items-center justify-center font-outfit font-extrabold text-base shadow-xs">S</span>
+                    <div>
+                        <h3 class="font-outfit font-extrabold text-base text-slate-900">
+                            3. Pasarela de Pagos en Línea (Stripe Direct Checkout)
+                        </h3>
+                        <p class="text-[11px] text-slate-500 font-medium">Cobros seguros con tarjeta de crédito/débito y gestión de API keys.</p>
+                    </div>
+                </div>
+                <span class="glass-badge glass-badge-purple">STRIPE API v1</span>
+            </div>
+
+            <div class="text-xs text-slate-700 glass-subtle-box p-3.5 flex items-start gap-2.5">
+                <span class="text-base text-teal-600 shrink-0">💳</span>
+                <div class="leading-relaxed">
+                    <strong>Modo de Operación:</strong> Miracle Spa cuenta con un motor de validación de tarjetas con algoritmo de Luhn y simulador de pagos para XAMPP. Para procesar transacciones reales en internet, ingresa tus claves de <a href="https://dashboard.stripe.com/apikeys" target="_blank" class="text-teal-700 underline font-bold">Stripe Dashboard</a>.
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+                <div>
+                    <label class="block font-outfit font-bold text-slate-700 mb-1">Estado de la Pasarela Stripe</label>
+                    <select name="stripe_enabled" class="w-full px-3 py-2.5 rounded-xl border border-white/80 bg-white/80 focus:outline-none focus:ring-2 focus:ring-teal-500 font-medium">
+                        <option value="1" <?= ($settings['stripe_enabled'] ?? '1') === '1' ? 'selected' : '' ?>>Habilitada (Aceptar Pagos en Línea)</option>
+                        <option value="0" <?= ($settings['stripe_enabled'] ?? '') === '0' ? 'selected' : '' ?>>Deshabilitada (Solo Pago en Sede)</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block font-outfit font-bold text-slate-700 mb-1">Modo de Operación</label>
+                    <select name="stripe_mode" class="w-full px-3 py-2.5 rounded-xl border border-white/80 bg-white/80 focus:outline-none focus:ring-2 focus:ring-teal-500 font-medium">
+                        <option value="test" <?= ($settings['stripe_mode'] ?? 'test') === 'test' ? 'selected' : '' ?>>Modo Sandbox / Pruebas (Test Mode)</option>
+                        <option value="live" <?= ($settings['stripe_mode'] ?? '') === 'live' ? 'selected' : '' ?>>Modo Producción en Vivo (Live Mode)</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block font-outfit font-bold text-slate-700 mb-1">Stripe Publishable Key (Clave Pública)</label>
+                    <input type="text" name="stripe_publishable_key" value="<?= htmlspecialchars($settings['stripe_publishable_key'] ?? 'pk_test_51MiracleSpaPublicStripeKeyDemo2026') ?>" placeholder="pk_test_... o pk_live_..." class="w-full px-3 py-2.5 rounded-xl border border-white/80 bg-white/80 font-mono-pm focus:outline-none focus:ring-2 focus:ring-teal-500">
+                </div>
+
+                <div>
+                    <label class="block font-outfit font-bold text-slate-700 mb-1">Stripe Secret Key (Clave Secreta)</label>
+                    <input type="password" name="stripe_secret_key" value="<?= htmlspecialchars($settings['stripe_secret_key'] ?? 'sk_test_51MiracleSpaSecretStripeKeyDemo2026') ?>" placeholder="sk_test_... o sk_live_..." class="w-full px-3 py-2.5 rounded-xl border border-white/80 bg-white/80 font-mono-pm focus:outline-none focus:ring-2 focus:ring-teal-500">
+                </div>
+
+                <div>
+                    <label class="block font-outfit font-bold text-slate-700 mb-1">Moneda de Cobro en Stripe</label>
+                    <select name="stripe_currency" class="w-full px-3 py-2.5 rounded-xl border border-white/80 bg-white/80 focus:outline-none focus:ring-2 focus:ring-teal-500 font-medium font-mono-pm">
+                        <option value="USD" <?= strtoupper($settings['stripe_currency'] ?? 'USD') === 'USD' ? 'selected' : '' ?>>USD - Dólar Estadounidense ($)</option>
+                        <option value="EUR" <?= strtoupper($settings['stripe_currency'] ?? '') === 'EUR' ? 'selected' : '' ?>>EUR - Euro (€)</option>
+                        <option value="COP" <?= strtoupper($settings['stripe_currency'] ?? '') === 'COP' ? 'selected' : '' ?>>COP - Peso Colombiano ($)</option>
+                        <option value="MXN" <?= strtoupper($settings['stripe_currency'] ?? '') === 'MXN' ? 'selected' : '' ?>>MXN - Peso Mexicano ($)</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block font-outfit font-bold text-slate-700 mb-1">Permitir Pago en Sede (Presencial)</label>
+                    <select name="allow_pay_on_venue" class="w-full px-3 py-2.5 rounded-xl border border-white/80 bg-white/80 focus:outline-none focus:ring-2 focus:ring-teal-500 font-medium">
+                        <option value="1" <?= ($settings['allow_pay_on_venue'] ?? '1') === '1' ? 'selected' : '' ?>>Sí (Cliente puede elegir pagar al llegar)</option>
+                        <option value="0" <?= ($settings['allow_pay_on_venue'] ?? '') === '0' ? 'selected' : '' ?>>No (Exigir pago previo con tarjeta)</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección 4: Configuración de Correo Electrónico (SMTP) -->
         <div id="email-settings" class="bg-white rounded-2xl border border-gray-200 p-6 shadow-2xs space-y-4">
             <h3 class="font-serif font-bold text-base text-[#12372a] border-b border-gray-100 pb-2">
-                3. Configuración de Correo Electrónico (Confirmaciones y Notificaciones)
+                4. Configuración de Correo Electrónico (Confirmaciones y Notificaciones)
             </h3>
 
             <div class="text-xs text-gray-600 bg-emerald-50 border border-emerald-200 rounded-xl p-3 mb-2">

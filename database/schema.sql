@@ -104,6 +104,10 @@ CREATE TABLE IF NOT EXISTS `appointments` (
   `buffer_minutes` INT NOT NULL DEFAULT 15,
   `price` DECIMAL(10,2) NOT NULL DEFAULT 0.00,
   `status` ENUM('pendiente', 'confirmada', 'completada', 'cancelada', 'reprogramada') NOT NULL DEFAULT 'confirmada',
+  `payment_status` ENUM('pendiente', 'pagado', 'reembolsado', 'fallido') NOT NULL DEFAULT 'pendiente',
+  `payment_method` VARCHAR(50) DEFAULT 'en_sede',
+  `stripe_payment_intent_id` VARCHAR(100) NULL,
+  `paid_at` DATETIME NULL,
   `manage_token` VARCHAR(64) NOT NULL UNIQUE,
   `client_notes` TEXT NULL,
   `admin_notes` TEXT NULL,
@@ -113,10 +117,35 @@ CREATE TABLE IF NOT EXISTS `appointments` (
   `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
   INDEX `idx_date_prof` (`date`, `professional_id`),
   INDEX `idx_date_status` (`date`, `status`),
+  INDEX `idx_payment_status` (`payment_status`),
   INDEX `idx_token` (`manage_token`),
   CONSTRAINT `fk_app_client` FOREIGN KEY (`client_id`) REFERENCES `clients` (`id`) ON DELETE RESTRICT,
   CONSTRAINT `fk_app_service` FOREIGN KEY (`service_id`) REFERENCES `services` (`id`) ON DELETE RESTRICT,
   CONSTRAINT `fk_app_prof` FOREIGN KEY (`professional_id`) REFERENCES `professionals` (`id`) ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Tabla de Pagos & Transacciones en Línea (Stripe)
+CREATE TABLE IF NOT EXISTS `payments` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `appointment_id` INT NOT NULL,
+  `transaction_id` VARCHAR(100) NOT NULL UNIQUE,
+  `amount` DECIMAL(10,2) NOT NULL,
+  `currency` VARCHAR(10) NOT NULL DEFAULT 'USD',
+  `gateway` VARCHAR(50) NOT NULL DEFAULT 'stripe',
+  `payment_method` VARCHAR(50) NOT NULL DEFAULT 'card',
+  `status` ENUM('pendiente', 'completado', 'fallido', 'reembolsado') NOT NULL DEFAULT 'completado',
+  `card_brand` VARCHAR(50) NULL,
+  `card_last4` VARCHAR(4) NULL,
+  `receipt_url` VARCHAR(255) NULL,
+  `customer_name` VARCHAR(150) NULL,
+  `customer_email` VARCHAR(150) NULL,
+  `metadata_json` TEXT NULL,
+  `paid_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  INDEX `idx_payment_app` (`appointment_id`),
+  INDEX `idx_payment_status` (`status`),
+  INDEX `idx_payment_txn` (`transaction_id`),
+  CONSTRAINT `fk_payment_appointment` FOREIGN KEY (`appointment_id`) REFERENCES `appointments` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Tabla de Auditoría y Registro de Notificaciones por Correo Electrónico

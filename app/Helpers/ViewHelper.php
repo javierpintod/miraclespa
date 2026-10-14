@@ -62,4 +62,32 @@ class ViewHelper {
                     {$info['label']}
                 </span>";
     }
+
+    public static function paymentBadge(?string $status, ?string $method = 'stripe'): string {
+        $status = strtolower($status ?? 'pendiente');
+        $badges = [
+            'pagado' => [
+                'label' => '✓ Pagado' . ($method === 'stripe' ? ' (Stripe)' : ''),
+                'class' => 'bg-emerald-500/15 text-emerald-800 border border-emerald-500/30 shadow-xs'
+            ],
+            'pendiente' => [
+                'label' => '⏱ Pendiente en Sede',
+                'class' => 'bg-amber-500/15 text-amber-800 border border-amber-500/30 shadow-xs'
+            ],
+            'reembolsado' => [
+                'label' => '↺ Reembolsado',
+                'class' => 'bg-rose-500/15 text-rose-800 border border-rose-500/30 shadow-xs'
+            ],
+            'fallido' => [
+                'label' => '✕ Pago Fallido',
+                'class' => 'bg-red-500/20 text-red-900 border border-red-500/40 shadow-xs'
+            ]
+        ];
+
+        $info = $badges[$status] ?? ['label' => ucfirst($status), 'class' => 'bg-slate-100 text-slate-700 border border-slate-300'];
+
+        return "<span class='inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-mono-pm font-bold tracking-wide backdrop-blur-md {$info['class']}'>
+                    {$info['label']}
+                </span>";
+    }
 }

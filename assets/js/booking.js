@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
         clientEmail: '',
         clientPhone: '',
         clientNotes: '',
+        paymentChoice: 'stripe',
         confirmedAppointment: null
     };
 
@@ -43,6 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const summaryDate = document.getElementById('summary-date');
     const summaryTime = document.getElementById('summary-time');
     const summaryProf = document.getElementById('summary-professional');
+    const summaryPayment = document.getElementById('summary-payment');
 
     // Inicializar fecha mínima en el selector (hoy)
     if (dateInput) {
@@ -359,6 +361,73 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Manejo de Modalidad de Pago y Datos de Tarjeta
+    const paymentRadios = document.querySelectorAll('input[name="payment_choice"]');
+    const stripeFieldsContainer = document.getElementById('stripe-card-fields-container');
+    const stripeLabel = document.getElementById('payment-choice-stripe-label');
+    const venueLabel = document.getElementById('payment-choice-venue-label');
+    const bookingCardNumberInput = document.getElementById('booking-card-number');
+    const bookingCardExpInput = document.getElementById('booking-card-exp');
+    const bookingCardBrandBadge = document.getElementById('booking-card-brand');
+
+    paymentRadios.forEach(radio => {
+        radio.addEventListener('change', (e) => {
+            state.paymentChoice = e.target.value;
+            if (state.paymentChoice === 'stripe') {
+                if (stripeFieldsContainer) stripeFieldsContainer.classList.remove('hidden');
+                if (summaryPayment) summaryPayment.textContent = '💳 En Línea con Stripe';
+                if (stripeLabel) {
+                    stripeLabel.classList.add('border-teal-500', 'bg-teal-50/70');
+                    stripeLabel.classList.remove('border-white/80', 'bg-white/60');
+                }
+                if (venueLabel) {
+                    venueLabel.classList.remove('border-teal-500', 'bg-teal-50/70');
+                    venueLabel.classList.add('border-white/80', 'bg-white/60');
+                }
+            } else {
+                if (stripeFieldsContainer) stripeFieldsContainer.classList.add('hidden');
+                if (summaryPayment) summaryPayment.textContent = '🏢 En Sede del Spa';
+                if (venueLabel) {
+                    venueLabel.classList.add('border-teal-500', 'bg-teal-50/70');
+                    venueLabel.classList.remove('border-white/80', 'bg-white/60');
+                }
+                if (stripeLabel) {
+                    stripeLabel.classList.remove('border-teal-500', 'bg-teal-50/70');
+                    stripeLabel.classList.add('border-white/80', 'bg-white/60');
+                }
+            }
+        });
+    });
+
+    if (bookingCardNumberInput) {
+        bookingCardNumberInput.addEventListener('input', (e) => {
+            let val = e.target.value.replace(/\D/g, '').substring(0, 16);
+            e.target.value = val.match(/.{1,4}/g)?.join(' ') || '';
+
+            if (bookingCardBrandBadge) {
+                if (val.startsWith('4')) {
+                    bookingCardBrandBadge.textContent = 'Visa';
+                } else if (/^(5[1-5]|2[2-7])/.test(val)) {
+                    bookingCardBrandBadge.textContent = 'Mastercard';
+                } else if (/^(34|37)/.test(val)) {
+                    bookingCardBrandBadge.textContent = 'Amex';
+                } else {
+                    bookingCardBrandBadge.textContent = 'Stripe Segura';
+                }
+            }
+        });
+    }
+
+    if (bookingCardExpInput) {
+        bookingCardExpInput.addEventListener('input', (e) => {
+            let val = e.target.value.replace(/\D/g, '').substring(0, 4);
+            if (val.length >= 2) {
+                val = val.substring(0, 2) + '/' + val.substring(2);
+            }
+            e.target.value = val;
+        });
+    }
+
     // 7. Enviar Reserva y Confirmación
     if (bookingForm) {
         bookingForm.addEventListener('submit', async (e) => {
@@ -374,26 +443,59 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
+            const payload = {
+                service_id: state.selectedService.id,
+                date: state.selectedDate,
+                start_time: state.selectedTime,
+                professional_id: state.selectedProfessional,
+                client_name: state.clientName,
+                client_email: state.clientEmail,
+                client_phone: state.clientPhone,
+                client_notes: state.clientNotes,
+                payment_choice: state.paymentChoice
+            };
+
+            // Validar datos de tarjeta si seleccionó pago con Stripe
+            if (state.paymentChoice === 'stripe') {
+                const cardholder = document.getElementById('booking-cardholder')?.value.trim();
+                const cardNum = document.getElementById('booking-card-number')?.value.replace(/\s+/g, '');
+                const cardExp = document.getElementById('booking-card-exp')?.value.trim();
+                const cardCvc = document.getElementById('booking-card-cvc')?.value.trim();
+
+                if (!cardholder) {
+                    alert('Por favor ingresa el nombre del titular de la tarjeta.');
+                    return;
+                }
+                if (!cardNum || cardNum.length < 13) {
+                    alert('Por favor ingresa un número de tarjeta válido.');
+                    return;
+                }
+                if (!cardExp || !cardExp.includes('/')) {
+                    alert('Por favor indica la fecha de expiración en formato MM/AA.');
+                    return;
+                }
+                if (!cardCvc || cardCvc.length < 3) {
+                    alert('Por favor indica el código de seguridad CVC (3 o 4 dígitos).');
+                    return;
+                }
+
+                const [expMonth, expYear] = cardExp.split('/');
+                payload.cardholder_name = cardholder;
+                payload.card_number = cardNum;
+                payload.exp_month = expMonth;
+                payload.exp_year = expYear;
+                payload.cvc = cardCvc;
+            }
+
             if (!confirmBtn) return;
             const originalText = confirmBtn.innerHTML;
             confirmBtn.disabled = true;
             confirmBtn.innerHTML = `
                 <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path></svg>
-                Confirmando tu Reserva...
+                ${state.paymentChoice === 'stripe' ? 'Procesando Pago y Reserva...' : 'Confirmando tu Reserva...'}
             `;
 
             try {
-                const payload = {
-                    service_id: state.selectedService.id,
-                    date: state.selectedDate,
-                    start_time: state.selectedTime,
-                    professional_id: state.selectedProfessional,
-                    client_name: state.clientName,
-                    client_email: state.clientEmail,
-                    client_phone: state.clientPhone,
-                    client_notes: state.clientNotes
-                };
-
                 const resp = await fetch('api/book.php', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -429,7 +531,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const timeElem = document.getElementById('confirmed-time');
         const priceElem = document.getElementById('confirmed-price');
         const emailElem = document.getElementById('confirmed-email');
+        const paymentBadge = document.getElementById('confirmed-payment-status');
         const manageLink = document.getElementById('confirmed-manage-link');
+        const receiptLink = document.getElementById('confirmed-receipt-link');
 
         if (codeElem) codeElem.textContent = result.code;
         if (serviceElem) serviceElem.textContent = app.service_name;
@@ -439,8 +543,25 @@ document.addEventListener('DOMContentLoaded', () => {
         if (priceElem) priceElem.textContent = `$${parseFloat(app.price).toFixed(2)} USD`;
         if (emailElem) emailElem.textContent = app.client_email;
 
+        if (paymentBadge) {
+            if (result.payment && result.payment.status === 'pagado') {
+                paymentBadge.innerHTML = '<span class="text-emerald-700 bg-emerald-100/90 border border-emerald-300 px-2 py-0.5 rounded-md font-bold">✓ Pagado con Stripe</span>';
+            } else {
+                paymentBadge.innerHTML = '<span class="text-amber-800 bg-amber-100/90 border border-amber-300 px-2 py-0.5 rounded-md font-bold">Pendiente (Pago en Recepción)</span>';
+            }
+        }
+
         if (manageLink) {
             manageLink.href = `gestionar-cita.php?token=${encodeURIComponent(result.manage_token)}`;
+        }
+
+        if (receiptLink) {
+            if (result.payment && result.payment.receipt_url) {
+                receiptLink.href = result.payment.receipt_url;
+                receiptLink.classList.remove('hidden');
+            } else {
+                receiptLink.classList.add('hidden');
+            }
         }
     }
 

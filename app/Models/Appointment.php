@@ -81,6 +81,10 @@ class Appointment {
             $where[] = "a.status = ?";
             $params[] = $filters['status'];
         }
+        if (!empty($filters['payment_status'])) {
+            $where[] = "a.payment_status = ?";
+            $params[] = $filters['payment_status'];
+        }
         if (!empty($filters['professional_id'])) {
             $where[] = "a.professional_id = ?";
             $params[] = (int)$filters['professional_id'];
@@ -172,5 +176,41 @@ class Appointment {
                                   cancelled_at = IF(? = 'cancelada', NOW(), cancelled_at)
                               WHERE id = ?");
         return $stmt->execute([$status, $reason, $status, $id]);
+    }
+
+    /**
+     * Actualiza el estado de pago de una cita
+     */
+    public static function updatePaymentStatus(
+        int $id,
+        string $paymentStatus,
+        string $paymentMethod = 'stripe',
+        ?string $stripePaymentIntentId = null,
+        bool $setPaidAt = true
+    ): bool {
+        $db = Database::getConnection();
+        $sql = "UPDATE appointments 
+                SET payment_status = ?,
+                    payment_method = ?,
+                    stripe_payment_intent_id = COALESCE(?, stripe_payment_intent_id),
+                    paid_at = " . ($setPaidAt && $paymentStatus === 'pagado' ? 'NOW()' : 'paid_at') . "
+                WHERE id = ?";
+        $stmt = $db->prepare($sql);
+        return $stmt->execute([$paymentStatus, $paymentMethod, $stripePaymentIntentId, $id]);
+    }
+
+    /**
+     * Busca una cita por PaymentIntent ID de Stripe
+     */
+    public static function findByStripePaymentIntent(string $paymentIntentId): ?array {
+        $db = Database::getConnection();
+        $stmt = $db->prepare("SELECT a.*, c.name AS client_name, c.email AS client_email, s.name AS service_name
+                              FROM appointments a
+                              JOIN clients c ON c.id = a.client_id
+                              JOIN services s ON s.id = a.service_id
+                              WHERE a.stripe_payment_intent_id = ?");
+        $stmt->execute([trim($paymentIntentId)]);
+        $row = $stmt->fetch();
+        return $row ?: null;
     }
 }

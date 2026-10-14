@@ -11,6 +11,7 @@ require_once __DIR__ . '/../Models/Professional.php';
 require_once __DIR__ . '/../Models/Appointment.php';
 require_once __DIR__ . '/AvailabilityService.php';
 require_once __DIR__ . '/MailerService.php';
+require_once __DIR__ . '/StripePaymentService.php';
 
 class BookingService {
     /**
@@ -128,6 +129,24 @@ class BookingService {
             $appointmentId = (int)$db->lastInsertId();
             $db->commit();
 
+            // 4. Procesamiento de Pago (Stripe o Presencial)
+            $paymentChoice = $data['payment_choice'] ?? 'en_sede';
+            $paymentResult = null;
+
+            if ($paymentChoice === 'stripe') {
+                $paymentResult = StripePaymentService::processAppointmentPayment($appointmentId, $data);
+                if (!$paymentResult['success']) {
+                    // Si el cobro falla, revertir la reserva para no bloquear el slot
+                    Appointment::updateStatus($appointmentId, 'cancelada', 'Fallo de pago Stripe: ' . $paymentResult['error']);
+                    return [
+                        'success' => false,
+                        'error' => 'No se pudo completar el pago con Stripe: ' . $paymentResult['error']
+                    ];
+                }
+            } else {
+                Appointment::updatePaymentStatus($appointmentId, 'pendiente', 'en_sede');
+            }
+
             // Cargar datos completos para la notificación
             $appointment = Appointment::findById($appointmentId);
 
@@ -138,7 +157,8 @@ class BookingService {
                 'success' => true,
                 'appointment' => $appointment,
                 'code' => $code,
-                'manage_token' => $manageToken
+                'manage_token' => $manageToken,
+                'payment' => $paymentResult
             ];
         } catch (Exception $e) {
             $db->rollBack();
@@ -252,9 +272,19 @@ class BookingService {
 
         $res = Appointment::updateStatus($appointmentId, 'cancelada', $reason);
         if ($res) {
+            // Reembolso automático si la cita había sido pagada con Stripe
+            $refundResult = null;
+            if ($appointment['payment_status'] === 'pagado') {
+                $refundResult = StripePaymentService::refundAppointment($appointmentId, $reason);
+            }
+
             $updatedAppointment = Appointment::findById($appointmentId);
             MailerService::sendCancellationConfirmation($updatedAppointment, $reason);
-            return ['success' => true, 'appointment' => $updatedAppointment];
+            return [
+                'success' => true, 
+                'appointment' => $updatedAppointment,
+                'refund' => $refundResult
+            ];
         }
 
         return ['success' => false, 'error' => 'No se pudo cancelar la cita.'];

@@ -147,6 +147,17 @@ $spaPhone = AppConfig::getSetting('spa_phone', '+1 (555) 789-2345');
                             <span class="font-mono-pm font-extrabold text-teal-700 text-base">$<?= number_format((float)$appointment['price'], 2) ?> USD</span>
                         </div>
                         <div>
+                            <span class="text-slate-500 font-mono-pm text-[11px] uppercase tracking-wider block mb-0.5">Estado del Pago:</span>
+                            <div class="flex items-center gap-2 flex-wrap mt-0.5">
+                                <?= ViewHelper::paymentBadge($appointment['payment_status'] ?? 'pendiente', $appointment['payment_method'] ?? 'venue') ?>
+                                <?php if (($appointment['payment_status'] ?? '') === 'pagado'): ?>
+                                    <a href="recibo.php?token=<?= urlencode($appointment['manage_token']) ?>" target="_blank" class="inline-flex items-center gap-1 px-2.5 py-1 text-[11px] font-bold font-outfit rounded-lg bg-emerald-500/15 text-emerald-800 border border-emerald-500/30 hover:bg-emerald-500/25 transition-colors">
+                                        <span>🧾</span> Ver Recibo Digital
+                                    </a>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                        <div>
                             <span class="text-slate-500 font-mono-pm text-[11px] uppercase tracking-wider block mb-0.5">Cliente:</span>
                             <span class="font-bold text-slate-900 text-sm"><?= htmlspecialchars($appointment['client_name']) ?></span>
                             <span class="text-slate-500 block text-[11px] font-mono-pm"><?= htmlspecialchars($appointment['client_email']) ?> &bull; <?= htmlspecialchars($appointment['client_phone']) ?></span>
@@ -169,11 +180,17 @@ $spaPhone = AppConfig::getSetting('spa_phone', '+1 (555) 789-2345');
                                 </div>
                             <?php else: ?>
                                 <p class="text-xs text-slate-600 mb-4 leading-relaxed">
-                                    Puedes reprogramar tu fecha y horario sin costo, o cancelar tu reserva si no puedes asistir (restan <?= $policyCheck['hoursRemaining'] ?? 0 ?> horas para tu turno).
+                                    Puedes realizar el pago seguro de tu sesión en línea con tarjeta vía Stripe, reprogramar tu fecha y horario sin costo, o cancelar tu reserva si no puedes asistir.
                                 </p>
                             <?php endif; ?>
 
                             <div class="flex flex-wrap items-center gap-3">
+                                <?php if (($appointment['payment_status'] ?? '') !== 'pagado'): ?>
+                                    <button type="button" onclick="openPayOnlineModal()" class="btn-glass-primary px-5 py-2.5 rounded-2xl text-xs flex items-center gap-2 bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-lg shadow-teal-500/25 hover:shadow-teal-500/40 transform hover:-translate-y-0.5 transition-all">
+                                        <span>💳 Pagar en Línea con Stripe ($<?= number_format((float)$appointment['price'], 2) ?>)</span>
+                                    </button>
+                                <?php endif; ?>
+
                                 <?php if ($policyCheck && $policyCheck['allowed']): ?>
                                     <button type="button" onclick="openRescheduleModal()" class="btn-glass-secondary px-5 py-2.5 rounded-2xl text-xs flex items-center gap-2">
                                         <span>📅 Reprogramar Cita</span>
@@ -260,7 +277,185 @@ $spaPhone = AppConfig::getSetting('spa_phone', '+1 (555) 789-2345');
                 </div>
             </div>
 
+            <!-- MODAL DE PAGO EN LÍNEA STRIPE GLASSMORFISTA -->
+            <div id="modal-pay-online" class="fixed inset-0 bg-slate-950/40 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+                <div class="glass-modal max-w-lg w-full p-6 sm:p-8 rounded-3xl shadow-2xl relative border border-white/80">
+                    <div class="flex items-center justify-between pb-4 border-b border-slate-200/60 mb-5">
+                        <div class="flex items-center gap-3">
+                            <span class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-emerald-500 to-teal-600 text-white flex items-center justify-center text-lg shadow-md shadow-emerald-500/30">💳</span>
+                            <div>
+                                <h3 class="font-outfit font-extrabold text-lg text-slate-900">Pagar en Línea con Stripe</h3>
+                                <span class="font-mono-pm text-[10px] text-teal-700 font-bold block uppercase tracking-wider">Transacción Cifrada SSL 256-Bit</span>
+                            </div>
+                        </div>
+                        <button type="button" onclick="closePayOnlineModal()" class="w-8 h-8 rounded-full bg-slate-200/50 hover:bg-slate-200 text-slate-600 flex items-center justify-center text-xl font-bold transition-colors">&times;</button>
+                    </div>
+
+                    <!-- Resumen del Pago -->
+                    <div class="glass-subtle-box p-4 rounded-2xl mb-4 text-xs">
+                        <div class="flex justify-between items-center text-slate-600 mb-1">
+                            <span>Servicio a abonar:</span>
+                            <span class="font-bold text-slate-900"><?= htmlspecialchars($appointment['service_name']) ?></span>
+                        </div>
+                        <div class="flex justify-between items-center text-slate-600 mb-1">
+                            <span>Código de Reserva:</span>
+                            <span class="font-mono-pm font-bold text-teal-800"><?= htmlspecialchars($appointment['code']) ?></span>
+                        </div>
+                        <div class="flex justify-between items-center pt-2 border-t border-slate-200/60 font-outfit text-sm">
+                            <span class="font-bold text-slate-900">Total a Pagar:</span>
+                            <span class="font-mono-pm font-extrabold text-lg text-emerald-700">$<?= number_format((float)$appointment['price'], 2) ?> USD</span>
+                        </div>
+                    </div>
+
+                    <form id="form-pay-online" class="space-y-3.5 text-xs">
+                        <input type="hidden" id="pay-token" value="<?= htmlspecialchars($appointment['manage_token']) ?>">
+
+                        <div id="pay-error-box" class="hidden bg-rose-50 border border-rose-200 text-rose-800 text-xs rounded-xl p-3 font-medium"></div>
+
+                        <div>
+                            <label class="block font-bold text-slate-700 mb-1 font-mono-pm text-[11px] uppercase">Nombre en la Tarjeta *</label>
+                            <input type="text" id="pay-cardholder" required placeholder="Como figura en el plástico" value="<?= htmlspecialchars($appointment['client_name']) ?>" class="w-full px-4 py-2.5 rounded-xl border border-white/80 bg-white/80 text-xs focus:ring-2 focus:ring-teal-500 focus:outline-none">
+                        </div>
+
+                        <div>
+                            <div class="flex items-center justify-between mb-1">
+                                <label class="block font-bold text-slate-700 font-mono-pm text-[11px] uppercase">Número de Tarjeta *</label>
+                                <span id="pay-card-brand" class="font-mono-pm text-[10px] text-teal-700 font-bold uppercase">Stripe Segura</span>
+                            </div>
+                            <div class="relative">
+                                <input type="text" id="pay-card-number" required maxlength="19" placeholder="4242 •••• •••• 4242" class="w-full pl-4 pr-10 py-2.5 rounded-xl border border-white/80 bg-white/80 font-mono-pm text-xs focus:ring-2 focus:ring-teal-500 focus:outline-none">
+                                <span class="absolute right-3 top-2.5 text-slate-400">💳</span>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block font-bold text-slate-700 mb-1 font-mono-pm text-[11px] uppercase">Expiración (MM/AA) *</label>
+                                <input type="text" id="pay-card-exp" required maxlength="5" placeholder="MM/AA" class="w-full px-4 py-2.5 rounded-xl border border-white/80 bg-white/80 font-mono-pm text-xs text-center focus:ring-2 focus:ring-teal-500 focus:outline-none">
+                            </div>
+                            <div>
+                                <label class="block font-bold text-slate-700 mb-1 font-mono-pm text-[11px] uppercase">CVC / CVV *</label>
+                                <input type="password" id="pay-card-cvc" required maxlength="4" placeholder="123" class="w-full px-4 py-2.5 rounded-xl border border-white/80 bg-white/80 font-mono-pm text-xs text-center focus:ring-2 focus:ring-teal-500 focus:outline-none">
+                            </div>
+                        </div>
+
+                        <div class="p-2.5 rounded-xl bg-slate-100/70 border border-slate-200/50 flex items-center justify-between text-[11px] text-slate-500 font-mono-pm">
+                            <span>🔒 Pasarela Stripe Segura</span>
+                            <span class="text-emerald-700 font-bold">Sin comisiones extra</span>
+                        </div>
+
+                        <div class="pt-3 border-t border-slate-200/60 flex justify-end gap-3 items-center">
+                            <button type="button" onclick="closePayOnlineModal()" class="px-4 py-2 text-xs font-mono-pm font-bold text-slate-600 hover:text-slate-900">
+                                Cancelar
+                            </button>
+                            <button type="submit" id="btn-submit-pay" class="btn-glass-primary px-6 py-2.5 rounded-2xl text-xs flex items-center gap-2 bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-bold">
+                                <span>Pagar $<?= number_format((float)$appointment['price'], 2) ?> USD</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
             <script>
+                function openPayOnlineModal() {
+                    document.getElementById('modal-pay-online').classList.remove('hidden');
+                    document.getElementById('pay-error-box').classList.add('hidden');
+                }
+                function closePayOnlineModal() {
+                    document.getElementById('modal-pay-online').classList.add('hidden');
+                }
+
+                // Detección de marca y formateo de tarjeta
+                const cardNumInput = document.getElementById('pay-card-number');
+                const cardBrandEl = document.getElementById('pay-card-brand');
+                if (cardNumInput) {
+                    cardNumInput.addEventListener('input', (e) => {
+                        let val = e.target.value.replace(/\D/g, '').substring(0, 16);
+                        e.target.value = val.match(/.{1,4}/g)?.join(' ') || '';
+
+                        // Marca
+                        if (val.startsWith('4')) {
+                            cardBrandEl.textContent = 'Visa';
+                        } else if (/^(5[1-5]|2[2-7])/.test(val)) {
+                            cardBrandEl.textContent = 'Mastercard';
+                        } else if (/^(34|37)/.test(val)) {
+                            cardBrandEl.textContent = 'Amex';
+                        } else {
+                            cardBrandEl.textContent = 'Stripe Segura';
+                        }
+                    });
+                }
+
+                // Formateo de fecha MM/AA
+                const cardExpInput = document.getElementById('pay-card-exp');
+                if (cardExpInput) {
+                    cardExpInput.addEventListener('input', (e) => {
+                        let val = e.target.value.replace(/\D/g, '').substring(0, 4);
+                        if (val.length >= 2) {
+                            val = val.substring(0, 2) + '/' + val.substring(2);
+                        }
+                        e.target.value = val;
+                    });
+                }
+
+                // Envío de pago
+                const formPayOnline = document.getElementById('form-pay-online');
+                if (formPayOnline) {
+                    formPayOnline.addEventListener('submit', async (e) => {
+                        e.preventDefault();
+                        const token = document.getElementById('pay-token').value;
+                        const cardholder = document.getElementById('pay-cardholder').value.trim();
+                        const cardNumber = document.getElementById('pay-card-number').value.replace(/\s+/g, '');
+                        const cardExp = document.getElementById('pay-card-exp').value.trim();
+                        const cvc = document.getElementById('pay-card-cvc').value.trim();
+                        const errorBox = document.getElementById('pay-error-box');
+                        const submitBtn = document.getElementById('btn-submit-pay');
+
+                        errorBox.classList.add('hidden');
+                        errorBox.textContent = '';
+
+                        const [expMonth, expYear] = cardExp.split('/');
+                        if (!expMonth || !expYear) {
+                            errorBox.textContent = 'Indica la fecha de expiración en formato MM/AA.';
+                            errorBox.classList.remove('hidden');
+                            return;
+                        }
+
+                        submitBtn.disabled = true;
+                        submitBtn.innerHTML = '<span>Procesando pago con Stripe...</span>';
+
+                        try {
+                            const resp = await fetch('api/pay_appointment.php', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({
+                                    token: token,
+                                    cardholder_name: cardholder,
+                                    card_number: cardNumber,
+                                    exp_month: expMonth,
+                                    exp_year: expYear,
+                                    cvc: cvc
+                                })
+                            });
+                            const res = await resp.json();
+                            if (res.success) {
+                                alert('¡Pago confirmado exitosamente! Redirigiendo a tu recibo digital...');
+                                window.location.href = `recibo.php?token=${encodeURIComponent(token)}`;
+                            } else {
+                                errorBox.textContent = res.error || 'Ocurrió un error al procesar el pago.';
+                                errorBox.classList.remove('hidden');
+                                submitBtn.disabled = false;
+                                submitBtn.innerHTML = '<span>Pagar $<?= number_format((float)$appointment['price'], 2) ?> USD</span>';
+                            }
+                        } catch (err) {
+                            errorBox.textContent = 'Error de conexión con el servidor de pago.';
+                            errorBox.classList.remove('hidden');
+                            submitBtn.disabled = false;
+                            submitBtn.innerHTML = '<span>Pagar $<?= number_format((float)$appointment['price'], 2) ?> USD</span>';
+                        }
+                    });
+                }
+
                 function openRescheduleModal() {
                     document.getElementById('modal-reschedule').classList.remove('hidden');
                     loadRescheduleSlots();

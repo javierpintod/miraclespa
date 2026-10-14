@@ -9,6 +9,7 @@ require_once __DIR__ . '/tests/AvailabilityTest.php';
 require_once __DIR__ . '/tests/BookingTest.php';
 require_once __DIR__ . '/tests/JwtTest.php';
 require_once __DIR__ . '/tests/SessionSingletonTest.php';
+require_once __DIR__ . '/tests/PaymentTest.php';
 
 $startTime = microtime(true);
 $availSuite = new AvailabilityTest();
@@ -23,7 +24,10 @@ $jwtResults = $jwtSuite->runAll();
 $sessionSuite = new SessionSingletonTest();
 $sessionResults = $sessionSuite->runAll();
 
-$allResults = array_merge($availResults, $bookingResults, $jwtResults, $sessionResults);
+$paymentSuite = new PaymentTest();
+$paymentResults = $paymentSuite->runAll();
+
+$allResults = array_merge($availResults, $bookingResults, $jwtResults, $sessionResults, $paymentResults);
 $total = count($allResults);
 $passed = count(array_filter($allResults, fn($r) => $r['passed']));
 $failed = $total - $passed;

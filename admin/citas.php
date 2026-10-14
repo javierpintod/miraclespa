@@ -14,6 +14,7 @@ require_once __DIR__ . '/../app/Services/BookingService.php';
 $filters = [
     'search' => $_GET['search'] ?? '',
     'status' => $_GET['status'] ?? '',
+    'payment_status' => $_GET['payment_status'] ?? '',
     'professional_id' => $_GET['professional_id'] ?? '',
     'date_from' => $_GET['date_from'] ?? '',
     'date_to' => $_GET['date_to'] ?? ''
@@ -69,20 +70,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
     <!-- Barra de Filtros y Búsqueda -->
     <div class="bg-white p-5 rounded-2xl border border-gray-200 shadow-2xs">
-        <form method="GET" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 text-xs">
+        <form method="GET" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-3 text-xs">
             <div>
                 <label class="block text-gray-500 font-semibold mb-1">Buscar (Código, Cliente, Teléfono)</label>
                 <input type="text" name="search" value="<?= htmlspecialchars($filters['search']) ?>" placeholder="Ej. Lucía o MRC-..." class="w-full px-3 py-2 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#12372a]">
             </div>
 
             <div>
-                <label class="block text-gray-500 font-semibold mb-1">Estado</label>
+                <label class="block text-gray-500 font-semibold mb-1">Estado Cita</label>
                 <select name="status" class="w-full px-3 py-2 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#12372a]">
                     <option value="">Todos los Estados</option>
                     <option value="confirmada" <?= $filters['status'] === 'confirmada' ? 'selected' : '' ?>>Confirmada</option>
                     <option value="completada" <?= $filters['status'] === 'completada' ? 'selected' : '' ?>>Completada</option>
                     <option value="reprogramada" <?= $filters['status'] === 'reprogramada' ? 'selected' : '' ?>>Reprogramada</option>
                     <option value="cancelada" <?= $filters['status'] === 'cancelada' ? 'selected' : '' ?>>Cancelada</option>
+                </select>
+            </div>
+
+            <div>
+                <label class="block text-gray-500 font-semibold mb-1">Estado de Pago</label>
+                <select name="payment_status" class="w-full px-3 py-2 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#12372a]">
+                    <option value="">Todos los Pagos</option>
+                    <option value="pendiente" <?= $filters['payment_status'] === 'pendiente' ? 'selected' : '' ?>>Pendiente</option>
+                    <option value="pagado" <?= $filters['payment_status'] === 'pagado' ? 'selected' : '' ?>>Pagado</option>
+                    <option value="reembolsado" <?= $filters['payment_status'] === 'reembolsado' ? 'selected' : '' ?>>Reembolsado</option>
+                    <option value="fallido" <?= $filters['payment_status'] === 'fallido' ? 'selected' : '' ?>>Fallido</option>
                 </select>
             </div>
 
@@ -131,13 +143,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                         <th class="p-3.5">Especialista</th>
                         <th class="p-3.5 text-right">Inversión</th>
                         <th class="p-3.5 text-center">Estado</th>
+                        <th class="p-3.5 text-center">Pago</th>
                         <th class="p-3.5 text-right">Acciones</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-100">
                     <?php if (empty($appointments)): ?>
                         <tr>
-                            <td colspan="8" class="p-8 text-center text-gray-400">
+                            <td colspan="9" class="p-8 text-center text-gray-400">
                                 No se encontraron citas con los filtros especificados.
                             </td>
                         </tr>
@@ -167,6 +180,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                             </td>
                             <td class="p-3.5 text-center">
                                 <?= ViewHelper::statusBadge($a['status']) ?>
+                            </td>
+                            <td class="p-3.5 text-center">
+                                <?= ViewHelper::paymentBadge($a['payment_status'] ?? 'pendiente', $a['payment_method'] ?? 'venue') ?>
+                                <?php if (($a['payment_status'] ?? '') === 'pagado'): ?>
+                                    <div class="mt-1">
+                                        <a href="../recibo.php?token=<?= urlencode($a['manage_token']) ?>" target="_blank" class="text-[10px] text-emerald-700 hover:text-emerald-900 font-semibold inline-flex items-center gap-1 hover:underline" title="Ver e Imprimir Recibo Digital">
+                                            <span>🧾</span> Recibo
+                                        </a>
+                                    </div>
+                                <?php endif; ?>
                             </td>
                             <td class="p-3.5 text-right space-x-1">
                                 <a href="../gestionar-cita.php?token=<?= urlencode($a['manage_token']) ?>" target="_blank" class="p-1.5 text-gray-500 hover:text-[#12372a] rounded hover:bg-gray-100 inline-block" title="Ver Comprobante">
