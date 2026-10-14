@@ -34,7 +34,7 @@ interface HeaderProps {
   currentView: AppView;
   onNavigate: (view: AppView) => void;
   unreadEmailsCount: number;
-  themeMode: 'serene' | 'memphis';
+  themeMode: 'serene' | 'posmodernista';
   onToggleTheme: () => void;
   selectedBranch: string;
   onChangeBranch: (branch: string) => void;
@@ -70,8 +70,8 @@ export const Header: React.FC<HeaderProps> = ({
             className="flex items-center gap-3 text-left group focus:outline-none"
           >
             <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all ${
-              themeMode === 'memphis'
-                ? 'bg-[#ffca98] text-[#134230] shadow-[3px_3px_0px_#134230] border-2 border-[#134230]'
+              themeMode === 'posmodernista'
+                ? 'bg-[#D4FF00] text-[#0D1117] shadow-[3px_3px_0px_#0D1117] border-2 border-[#0D1117]'
                 : 'bg-[#134230] text-[#bceed3] shadow-sm'
             }`}>
               <Sparkles className="w-5 h-5" />
@@ -130,8 +130,8 @@ export const Header: React.FC<HeaderProps> = ({
             onClick={() => onNavigate('booking')}
             className={`px-3.5 py-2 rounded-xl text-sm font-medium transition-all ${
               currentView === 'booking'
-                ? themeMode === 'memphis'
-                  ? 'bg-[#2d5a46] text-white shadow-[2px_2px_0px_#181d1a] font-semibold'
+                ? themeMode === 'posmodernista'
+                  ? 'bg-[#2548E8] text-white shadow-[2px_2px_0px_#0D1117] border-2 border-[#0D1117] font-semibold'
                   : 'bg-[#2d5a46] text-white font-semibold shadow-sm'
                 : 'text-[#414944] hover:bg-[#ebefea] hover:text-[#181d1a]'
             }`}
@@ -274,22 +274,22 @@ export const Header: React.FC<HeaderProps> = ({
             )}
           </button>
 
-          {/* Theme Palette Switcher (Serene vs Memphis) */}
+          {/* Theme Palette Switcher (Serene vs Posmodernista) */}
           <button
             onClick={onToggleTheme}
-            title={themeMode === 'serene' ? 'Cambiar a modo Memphis Vibrante' : 'Cambiar a modo Serene Sanctuary'}
+            title={themeMode === 'serene' ? 'Cambiar a modo Posmodernista' : 'Cambiar a modo Serene Sanctuary'}
             className="hidden sm:flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl border border-[#e5e9e4] bg-white text-xs font-semibold text-[#414944] hover:bg-[#f0f5f0] transition-colors"
           >
-            <Palette className="w-3.5 h-3.5 text-[#7d562d]" />
-            <span className="text-[11px]">{themeMode === 'serene' ? 'Memphis' : 'Serene'}</span>
+            <Palette className="w-3.5 h-3.5 text-[#2548E8]" />
+            <span className="text-[11px]">{themeMode === 'serene' ? 'Posmoderno' : 'Serene'}</span>
           </button>
 
           {/* Agendamiento Rápido Primary CTA */}
           <button
             onClick={() => onNavigate('booking')}
             className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all ${
-              themeMode === 'memphis'
-                ? 'bg-[#134230] text-[#bceed3] border-2 border-[#134230] shadow-[3px_3px_0px_#7d562d] hover:translate-x-[1px] hover:translate-y-[1px]'
+              themeMode === 'posmodernista'
+                ? 'bg-[#2548E8] text-white border-2 border-[#0D1117] shadow-[3px_3px_0px_#0D1117] hover:translate-x-[1px] hover:translate-y-[1px]'
                 : 'bg-[#2d5a46] text-white hover:bg-[#134230] shadow-[0_2px_6px_rgba(31,36,33,0.08)]'
             }`}
           >

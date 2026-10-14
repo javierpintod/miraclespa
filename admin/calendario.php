@@ -92,7 +92,7 @@ if ($nextMonth > 12) {
                 </select>
             </form>
 
-            <a href="citas.php?action=new" class="bg-[#12372a] text-[#d4af37] px-4 py-2 rounded-xl text-xs font-bold hover:bg-[#1a4a39] transition-all flex items-center gap-1.5 shrink-0 shadow-2xs">
+            <a href="citas.php?action=new" class="btn-pm-primary px-4 py-2 rounded-xl text-xs font-bold font-space flex items-center gap-1.5 shrink-0">
                 <span>+ Nueva Cita</span>
             </a>
         </div>

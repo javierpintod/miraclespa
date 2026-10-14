@@ -77,7 +77,7 @@ $professionals = Professional::getAll(false);
             <h2 class="text-xl font-serif font-bold text-gray-900">Equipo de Profesionales & Horarios Laborales</h2>
             <p class="text-xs text-gray-500 mt-0.5">Asigna qué servicios puede brindar cada terapeuta y sus jornadas de trabajo semanales.</p>
         </div>
-        <button type="button" onclick="openNewProfModal()" class="bg-[#12372a] text-[#d4af37] px-4 py-2.5 rounded-xl text-xs font-bold hover:bg-[#1a4a39] transition-all flex items-center gap-2 shadow-2xs self-start sm:self-auto">
+        <button type="button" onclick="openNewProfModal()" class="btn-pm-primary px-4 py-2.5 rounded-xl text-xs font-bold font-space flex items-center gap-2 self-start sm:self-auto">
             <span>+ Registrar Nuevo Especialista</span>
         </button>
     </div>
@@ -89,12 +89,12 @@ $professionals = Professional::getAll(false);
             $assignedIds = array_column($assignedServices, 'id');
             $schedules = Schedule::getByProfessional((int)$p['id']);
         ?>
-            <div class="bg-white rounded-2xl border border-gray-200 p-6 shadow-2xs flex flex-col justify-between hover:border-[#12372a] transition-colors">
+            <div class="bg-white rounded-2xl border-2 border-[#0D1117] p-6 pm-shadow-sm flex flex-col justify-between hover:pm-shadow transition-all">
                 <div>
                     <!-- Encabezado con Avatar -->
                     <div class="flex items-start justify-between gap-3 mb-4">
                         <div class="flex items-center gap-3">
-                            <span class="w-12 h-12 rounded-full bg-[#12372a]/10 text-[#12372a] font-bold text-sm flex items-center justify-center shrink-0 border border-[#12372a]/20">
+                            <span class="w-12 h-12 rounded-xl bg-[#2548E8] text-white font-syne font-bold text-base flex items-center justify-center shrink-0 border-2 border-[#0D1117] pm-shadow-xs">
                                 <?= substr($p['name'], 0, 1) ?>
                             </span>
                             <div>

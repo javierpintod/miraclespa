@@ -89,11 +89,11 @@ document.addEventListener('DOMContentLoaded', () => {
     categoryFilters.forEach(btn => {
         btn.addEventListener('click', () => {
             categoryFilters.forEach(b => {
-                b.classList.remove('bg-[#18181B]', 'text-white');
-                b.classList.add('bg-white', 'text-[#18181B]');
+                b.classList.remove('bg-[#0D1117]', 'text-white');
+                b.classList.add('bg-white', 'text-[#0D1117]');
             });
-            btn.classList.remove('bg-white', 'text-[#18181B]');
-            btn.classList.add('bg-[#18181B]', 'text-white');
+            btn.classList.remove('bg-white', 'text-[#0D1117]');
+            btn.classList.add('bg-[#0D1117]', 'text-white');
 
             const cat = btn.dataset.categoryFilter;
             state.selectedCategory = cat;
@@ -111,8 +111,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // 3. Selección de Servicio
     serviceCards.forEach(card => {
         card.addEventListener('click', () => {
-            serviceCards.forEach(c => c.classList.remove('border-[#FF006E]', 'bg-[#FFF9E6]', 'memphis-shadow-pink', 'ring-2', 'ring-[#FF006E]'));
-            card.classList.add('border-[#FF006E]', 'bg-[#FFF9E6]', 'memphis-shadow-pink', 'ring-2', 'ring-[#FF006E]');
+            serviceCards.forEach(c => c.classList.remove('border-[#2548E8]', 'bg-[#EFECE3]', 'pm-shadow-cobalt', 'ring-2', 'ring-[#2548E8]', 'border-[#FF006E]', 'bg-[#FFF9E6]', 'memphis-shadow-pink', 'ring-[#FF006E]'));
+            card.classList.add('border-[#2548E8]', 'bg-[#EFECE3]', 'pm-shadow-cobalt', 'ring-2', 'ring-[#2548E8]');
 
             state.selectedService = {
                 id: parseInt(card.dataset.id),
@@ -283,19 +283,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Opción 1: Asignación automática ("Cualquier profesional")
         const anyCard = document.createElement('div');
-        anyCard.className = `prof-card p-4 rounded-2xl border-2 ${state.selectedProfessional === 'any' ? 'border-[#18181B] bg-[#FFF9E6] memphis-shadow-yellow ring-2 ring-[#FFBE0B]' : 'border-[#18181B] bg-white memphis-shadow-sm'} cursor-pointer transition-all flex items-center gap-4`;
+        anyCard.className = `prof-card p-4 rounded-xl border-2 ${state.selectedProfessional === 'any' ? 'border-[#0D1117] bg-[#EFECE3] pm-shadow-acid ring-2 ring-[#D4FF00]' : 'border-[#0D1117] bg-white pm-shadow-sm'} cursor-pointer transition-all flex items-center gap-4`;
         anyCard.innerHTML = `
-            <div class="w-12 h-12 rounded-xl bg-[#FFBE0B] text-[#18181B] font-bold text-xl flex items-center justify-center shrink-0 border-2 border-[#18181B] memphis-shadow-sm">
+            <div class="w-12 h-12 rounded-xl bg-[#D4FF00] text-[#0D1117] font-bold text-xl flex items-center justify-center shrink-0 border-2 border-[#0D1117] pm-shadow-xs">
                 ✨
             </div>
             <div class="flex-1">
                 <div class="flex items-center gap-2">
                     <h4 class="font-space font-bold text-gray-900 text-sm">Cualquier Profesional Disponible</h4>
-                    <span class="memphis-sticker sticker-pink text-[9px]">Recomendado</span>
+                    <span class="pm-stamp sticker-yellow text-[9px]">Recomendado</span>
                 </div>
                 <p class="text-xs text-gray-600 font-medium mt-0.5">Asignación inteligente del terapeuta con mayor disponibilidad para este horario.</p>
             </div>
-            <div class="text-xs font-extrabold text-[#3A86FF]">Elegir →</div>
+            <div class="text-xs font-mono-pm font-bold text-[#2548E8]">Elegir →</div>
         `;
 
         anyCard.addEventListener('click', () => {
@@ -307,24 +307,24 @@ document.addEventListener('DOMContentLoaded', () => {
         profs.forEach(p => {
             const isAvail = (p.is_available_for_slot !== false);
             const card = document.createElement('div');
-            card.className = `prof-card p-4 rounded-2xl border-2 ${state.selectedProfessional == p.id ? 'border-[#18181B] bg-[#FFF9E6] memphis-shadow-yellow ring-2 ring-[#FFBE0B]' : 'border-[#18181B] bg-white memphis-shadow-sm'} ${isAvail ? 'cursor-pointer' : 'opacity-40 cursor-not-allowed bg-gray-100'} transition-all flex items-center gap-4`;
+            card.className = `prof-card p-4 rounded-xl border-2 ${state.selectedProfessional == p.id ? 'border-[#0D1117] bg-[#EFECE3] pm-shadow-acid ring-2 ring-[#D4FF00]' : 'border-[#0D1117] bg-white pm-shadow-sm'} ${isAvail ? 'cursor-pointer' : 'opacity-40 cursor-not-allowed bg-gray-100'} transition-all flex items-center gap-4`;
 
             const initials = p.name.split(' ').map(n => n[0]).join('').substring(0, 2);
 
             card.innerHTML = `
-                <div class="w-12 h-12 rounded-xl bg-[#3A86FF] text-white font-space font-bold text-sm flex items-center justify-center shrink-0 border-2 border-[#18181B] memphis-shadow-sm">
+                <div class="w-12 h-12 rounded-xl bg-[#2548E8] text-white font-space font-bold text-sm flex items-center justify-center shrink-0 border-2 border-[#0D1117] pm-shadow-xs">
                     ${initials}
                 </div>
                 <div class="flex-1 min-w-0">
                     <div class="flex items-center gap-2">
                         <h4 class="font-space font-bold text-gray-900 text-sm truncate">${p.name}</h4>
-                        <span class="text-xs text-[#18181B] font-extrabold bg-[#FFE484] px-1.5 py-0.5 rounded border border-[#18181B]">★ ${parseFloat(p.rating).toFixed(1)}</span>
+                        <span class="text-xs text-[#0D1117] font-mono-pm font-bold bg-[#D4FF00] px-1.5 py-0.5 rounded border border-[#0D1117]">★ ${parseFloat(p.rating).toFixed(1)}</span>
                     </div>
                     <p class="text-xs text-gray-600 font-medium truncate">${p.title}</p>
-                    ${!isAvail ? '<span class="text-[10px] text-[#FF006E] font-extrabold block mt-0.5">Ocupado en este horario</span>' : ''}
+                    ${!isAvail ? '<span class="text-[10px] text-[#FF2E7E] font-mono-pm font-bold block mt-0.5">Ocupado en este horario</span>' : ''}
                 </div>
                 <div>
-                    ${isAvail ? `<span class="text-xs font-extrabold text-[#3A86FF]">Elegir →</span>` : `<span class="text-xs text-gray-400 font-bold">No disp.</span>`}
+                    ${isAvail ? `<span class="text-xs font-mono-pm font-bold text-[#2548E8]">Elegir →</span>` : `<span class="text-xs text-gray-400 font-bold font-mono-pm">No disp.</span>`}
                 </div>
             `;
 
@@ -340,11 +340,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function selectProf(id, name, element) {
         document.querySelectorAll('.prof-card').forEach(c => {
-            c.classList.remove('border-[#18181B]', 'bg-[#FFF9E6]', 'memphis-shadow-yellow', 'ring-2', 'ring-[#FFBE0B]');
-            c.classList.add('bg-white', 'memphis-shadow-sm');
+            c.classList.remove('border-[#0D1117]', 'bg-[#EFECE3]', 'pm-shadow-acid', 'ring-2', 'ring-[#D4FF00]', 'bg-[#FFF9E6]', 'memphis-shadow-yellow', 'ring-[#FFBE0B]');
+            c.classList.add('bg-white', 'pm-shadow-sm');
         });
-        element.classList.remove('bg-white', 'memphis-shadow-sm');
-        element.classList.add('border-[#18181B]', 'bg-[#FFF9E6]', 'memphis-shadow-yellow', 'ring-2', 'ring-[#FFBE0B]');
+        element.classList.remove('bg-white', 'pm-shadow-sm');
+        element.classList.add('border-[#0D1117]', 'bg-[#EFECE3]', 'pm-shadow-acid', 'ring-2', 'ring-[#D4FF00]');
 
         state.selectedProfessional = id;
         state.selectedProfessionalName = name;

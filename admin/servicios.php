@@ -67,7 +67,7 @@ $services = Service::getAll(false); // todos, activos e inactivos
             <h2 class="text-xl font-serif font-bold text-gray-900">Carta de Servicios, Precios & Duraciones</h2>
             <p class="text-xs text-gray-500 mt-0.5">Define los tratamientos ofrecidos, sus tiempos en cabina y tarifas.</p>
         </div>
-        <button type="button" onclick="openNewServiceModal()" class="bg-[#12372a] text-[#d4af37] px-4 py-2.5 rounded-xl text-xs font-bold hover:bg-[#1a4a39] transition-all flex items-center gap-2 shadow-2xs self-start sm:self-auto">
+        <button type="button" onclick="openNewServiceModal()" class="btn-pm-primary px-4 py-2.5 rounded-xl text-xs font-bold font-space flex items-center gap-2 self-start sm:self-auto">
             <span>+ Crear Nuevo Servicio</span>
         </button>
     </div>
@@ -134,25 +134,25 @@ $services = Service::getAll(false); // todos, activos e inactivos
 </div>
 
 <!-- MODAL CREAR / EDITAR SERVICIO -->
-<div id="modal-service" class="fixed inset-0 bg-black/50 backdrop-blur-xs z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-gray-200">
-        <div class="flex items-center justify-between pb-3 border-b border-gray-100 mb-4">
-            <h3 class="font-serif font-bold text-lg text-[#12372a]" id="modal-service-title">Nuevo Servicio</h3>
-            <button type="button" onclick="closeServiceModal()" class="text-gray-400 hover:text-gray-600 text-2xl font-bold">&times;</button>
+<div id="modal-service" class="fixed inset-0 bg-[#0D1117]/60 backdrop-blur-xs z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-lg w-full p-6 pm-shadow-lg border-2 border-[#0D1117]">
+        <div class="flex items-center justify-between pb-3 border-b-2 border-[#0D1117] mb-4">
+            <h3 class="font-syne font-bold text-lg text-[#0D1117]" id="modal-service-title">Nuevo Servicio</h3>
+            <button type="button" onclick="closeServiceModal()" class="text-gray-400 hover:text-gray-900 text-2xl font-bold leading-none">&times;</button>
         </div>
 
-        <form method="POST" id="service-form" class="space-y-4 text-xs">
+        <form method="POST" id="service-form" class="space-y-4 text-xs font-mono-pm">
             <input type="hidden" name="action" id="service-action" value="create">
             <input type="hidden" name="id" id="service-id" value="">
 
             <div>
                 <label class="block font-bold text-gray-700 mb-1">Nombre del Servicio *</label>
-                <input type="text" name="name" id="service-name" required placeholder="Ej. Manicura Rusa & Nivelación" class="w-full px-3 py-2 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#12372a]">
+                <input type="text" name="name" id="service-name" required placeholder="Ej. Manicura Rusa & Nivelación" class="w-full px-3 py-2 rounded-xl border-2 border-[#0D1117] focus:outline-none focus:ring-2 focus:ring-[#2548E8]">
             </div>
 
             <div>
                 <label class="block font-bold text-gray-700 mb-1">Categoría *</label>
-                <select name="category_id" id="service-category" required class="w-full px-3 py-2 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#12372a]">
+                <select name="category_id" id="service-category" required class="w-full px-3 py-2 rounded-xl border-2 border-[#0D1117] focus:outline-none focus:ring-2 focus:ring-[#2548E8]">
                     <?php foreach ($categories as $cat): ?>
                         <option value="<?= $cat['id'] ?>"><?= htmlspecialchars($cat['name']) ?></option>
                     <?php endforeach; ?>
@@ -162,29 +162,29 @@ $services = Service::getAll(false); // todos, activos e inactivos
             <div class="grid grid-cols-2 gap-4">
                 <div>
                     <label class="block font-bold text-gray-700 mb-1">Duración (Minutos) *</label>
-                    <input type="number" name="duration_minutes" id="service-duration" required min="15" max="360" step="5" value="60" class="w-full px-3 py-2 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#12372a]">
+                    <input type="number" name="duration_minutes" id="service-duration" required min="15" max="360" step="5" value="60" class="w-full px-3 py-2 rounded-xl border-2 border-[#0D1117] focus:outline-none focus:ring-2 focus:ring-[#2548E8]">
                 </div>
                 <div>
                     <label class="block font-bold text-gray-700 mb-1">Precio ($ USD) *</label>
-                    <input type="number" name="price" id="service-price" required min="0" step="0.5" value="35.00" class="w-full px-3 py-2 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#12372a]">
+                    <input type="number" name="price" id="service-price" required min="0" step="0.5" value="35.00" class="w-full px-3 py-2 rounded-xl border-2 border-[#0D1117] focus:outline-none focus:ring-2 focus:ring-[#2548E8]">
                 </div>
             </div>
 
             <div>
                 <label class="block font-bold text-gray-700 mb-1">Descripción del Tratamiento</label>
-                <textarea name="description" id="service-description" rows="3" placeholder="Detalla los beneficios y productos empleados..." class="w-full px-3 py-2 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#12372a]"></textarea>
+                <textarea name="description" id="service-description" rows="3" placeholder="Detalla los beneficios y productos empleados..." class="w-full px-3 py-2 rounded-xl border-2 border-[#0D1117] focus:outline-none focus:ring-2 focus:ring-[#2548E8]"></textarea>
             </div>
 
             <div class="flex items-center gap-2">
-                <input type="checkbox" name="active" id="service-active" value="1" checked class="rounded text-[#12372a] focus:ring-[#12372a]">
+                <input type="checkbox" name="active" id="service-active" value="1" checked class="rounded text-[#2548E8] focus:ring-[#2548E8]">
                 <label for="service-active" class="font-bold text-gray-700">Servicio Activo en el Agendador Público</label>
             </div>
 
-            <div class="pt-3 border-t border-gray-100 flex justify-end gap-2">
-                <button type="button" onclick="closeServiceModal()" class="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg font-semibold">
+            <div class="pt-4 border-t-2 border-[#0D1117] flex justify-end gap-2">
+                <button type="button" onclick="closeServiceModal()" class="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg font-bold">
                     Cancelar
                 </button>
-                <button type="submit" class="bg-[#12372a] text-[#d4af37] px-5 py-2 rounded-xl font-bold hover:bg-[#1a4a39]">
+                <button type="submit" class="btn-pm-primary px-5 py-2.5 rounded-xl text-xs font-space">
                     Guardar Servicio
                 </button>
             </div>

@@ -56,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             <h2 class="text-xl font-serif font-bold text-gray-900">Listado de Citas & Reservaciones</h2>
             <p class="text-xs text-gray-500 mt-0.5">Control global de citas, reprogramaciones, estados y cancelaciones.</p>
         </div>
-        <button type="button" onclick="openNewAppointmentModal()" class="bg-[#12372a] text-[#d4af37] px-4 py-2.5 rounded-xl text-xs font-bold hover:bg-[#1a4a39] transition-all flex items-center gap-2 shadow-2xs self-start sm:self-auto">
+        <button type="button" onclick="openNewAppointmentModal()" class="btn-pm-primary px-4 py-2.5 rounded-xl text-xs font-bold font-space flex items-center gap-2 self-start sm:self-auto">
             <span>+ Agendar Nueva Cita Manual</span>
         </button>
     </div>

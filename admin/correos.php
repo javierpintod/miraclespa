@@ -20,7 +20,7 @@ $mailDriver = AppConfig::getSetting('mail_driver', 'simulated');
                 Todos los correos de confirmación, reprogramación y cancelación quedan registrados con su plantilla HTML completa.
             </p>
         </div>
-        <a href="configuracion.php#email-settings" class="bg-[#12372a] text-[#d4af37] px-4 py-2.5 rounded-xl text-xs font-bold hover:bg-[#1a4a39] transition-all flex items-center gap-2 shadow-2xs self-start sm:self-auto">
+        <a href="configuracion.php#email-settings" class="btn-pm-primary px-4 py-2.5 rounded-xl text-xs font-bold font-space flex items-center gap-2 self-start sm:self-auto">
             <span>⚙ Configurar Servidor SMTP Real</span>
         </a>
     </div>
@@ -91,7 +91,7 @@ $mailDriver = AppConfig::getSetting('mail_driver', 'simulated');
                                 </span>
                             </td>
                             <td class="p-4 text-right">
-                                <button type="button" onclick="previewEmailModal(<?= $em['id'] ?>)" class="bg-[#12372a] text-[#d4af37] px-3 py-1.5 rounded-lg font-bold text-[11px] hover:bg-[#1a4a39] shadow-2xs">
+                                <button type="button" onclick="previewEmailModal(<?= $em['id'] ?>)" class="btn-pm-acid px-3 py-1.5 rounded-lg font-bold text-[11px] font-space">
                                     👁 Ver HTML
                                 </button>
                             </td>
@@ -104,14 +104,14 @@ $mailDriver = AppConfig::getSetting('mail_driver', 'simulated');
 </div>
 
 <!-- MODAL VISOR DE CORREO HTML -->
-<div id="modal-email-preview" class="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-white rounded-2xl max-w-3xl w-full h-[85vh] flex flex-col shadow-2xl border border-gray-200 overflow-hidden">
-        <div class="p-4 bg-[#12372a] text-white flex items-center justify-between">
+<div id="modal-email-preview" class="fixed inset-0 bg-[#0D1117]/60 backdrop-blur-xs z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-3xl w-full h-[85vh] flex flex-col pm-shadow-lg border-2 border-[#0D1117] overflow-hidden">
+        <div class="p-4 bg-[#0D1117] text-white flex items-center justify-between border-b-2 border-[#0D1117]">
             <div class="flex items-center gap-2">
-                <span class="text-base">✉</span>
-                <span class="font-serif font-bold text-sm">Vista Previa de Correo Electrónico</span>
+                <span class="text-base text-[#D4FF00]">✉</span>
+                <span class="font-syne font-bold text-sm">Vista Previa de Correo Notificado</span>
             </div>
-            <button type="button" onclick="closeEmailPreview()" class="text-gray-300 hover:text-white text-2xl font-bold">&times;</button>
+            <button type="button" onclick="closeEmailPreview()" class="text-gray-300 hover:text-white text-2xl font-bold leading-none">&times;</button>
         </div>
 
         <div class="flex-1 bg-gray-100 p-2 overflow-hidden">

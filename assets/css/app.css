@@ -1,324 +1,422 @@
 /* ==========================================================
-   MIRACLE SPA SANCTUARY - SISTEMA DE DISEÑO MEMPHIS DESIGN
-   Estilo icónico de los 80s: colores vibrantes, sombras sólidas,
-   bordes geométricos y energía lúdica contemporánea.
+   MIRACLE SPA SANCTUARY - POSTMODERN DESIGN SYSTEM
+   Estilo: Posmodernismo / Postmodernism & Architectural Atelier
+   Rechazo al minimalismo frío ("Less is a bore"), tipografía
+   expresiva (Syne + Space Grotesk + Space Mono), paleta
+   de alto impacto (Cobalt Klein, Acid Lime, Noir y Cyber Orchid),
+   cuadrículas constructivas, sellos tipográficos y sombras táctiles.
    ========================================================== */
 
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Space+Grotesk:wght@500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@600;700;800&display=swap');
+
 :root {
-    /* Paleta Cromática Memphis */
-    --memphis-pink: #FF006E;
-    --memphis-pink-light: #FF5C9D;
-    --memphis-yellow: #FFBE0B;
-    --memphis-yellow-light: #FFE484;
-    --memphis-blue: #3A86FF;
-    --memphis-blue-light: #70A9FF;
-    --memphis-teal: #06D6A0;
-    --memphis-teal-light: #52F0C8;
-    --memphis-purple: #8338EC;
-    --memphis-purple-light: #A469FF;
-    --memphis-dark: #18181B;
-    --memphis-black: #111111;
-    --memphis-bg: #FDFBF7;
-    --memphis-card: #FFFFFF;
-    --memphis-cream: #FFF9E6;
+    /* Paleta Cromática Posmodernista */
+    --pm-noir: #0D1117;
+    --pm-black: #05070A;
+    --pm-cobalt: #2548E8;
+    --pm-cobalt-light: #4A6BFF;
+    --pm-cobalt-dark: #1734B8;
+    --pm-acid: #D4FF00;
+    --pm-acid-light: #E7FF66;
+    --pm-acid-dark: #B0D600;
+    --pm-orchid: #9E00FF;
+    --pm-orchid-light: #C056FF;
+    --pm-rose: #FF2E7E;
+    --pm-rose-light: #FF66A1;
+    --pm-terracotta: #FF5A36;
+    --pm-teal: #00E5A3;
+
+    /* Fondos y Superficies Posmodernas */
+    --pm-bg: #F7F5EE;
+    --pm-bg-alt: #EFECE3;
+    --pm-surface: #FFFFFF;
+    --pm-surface-muted: #F2EFE8;
+    --pm-border: #0D1117;
+
+    /* Compatibilidad retrospectiva con variables previas */
+    --memphis-pink: var(--pm-rose);
+    --memphis-pink-light: var(--pm-rose-light);
+    --memphis-yellow: var(--pm-acid);
+    --memphis-yellow-light: var(--pm-acid-light);
+    --memphis-blue: var(--pm-cobalt);
+    --memphis-blue-light: var(--pm-cobalt-light);
+    --memphis-teal: var(--pm-teal);
+    --memphis-purple: var(--pm-orchid);
+    --memphis-dark: var(--pm-noir);
+    --memphis-black: var(--pm-black);
+    --memphis-bg: var(--pm-bg);
+    --memphis-card: var(--pm-surface);
+    --memphis-cream: var(--pm-surface-muted);
 }
 
-body {
-    background-color: var(--memphis-bg);
-    color: var(--memphis-dark);
-    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    /* Patrón de puntos Memphis sutil en fondo */
-    background-image: radial-gradient(#d1d5db 1px, transparent 1px);
-    background-size: 24px 24px;
-}
-
-.font-serif {
-    font-family: 'Playfair Display', Georgia, serif;
-}
-
-.font-display {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-weight: 800;
+/* Tipografías Posmodernistas */
+.font-syne {
+    font-family: 'Syne', system-ui, -apple-system, sans-serif;
     letter-spacing: -0.02em;
 }
 
-/* Sombras duras Memphis (Hard Retro Shadows) */
+.font-space {
+    font-family: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+}
+
+.font-mono-pm {
+    font-family: 'Space Mono', monospace;
+}
+
+body {
+    background-color: var(--pm-bg);
+    color: var(--pm-noir);
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    /* Retícula arquitectónica posmodernista milimétrica */
+    background-image: 
+        linear-gradient(to right, rgba(13, 17, 23, 0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(13, 17, 23, 0.05) 1px, transparent 1px);
+    background-size: 32px 32px;
+}
+
+/* Sombras Duras & Desplazadas Posmodernistas (Hard Offset Shadows) */
+.pm-shadow-xs,
+.memphis-shadow-xs {
+    box-shadow: 2px 2px 0px var(--pm-noir);
+}
+
+.pm-shadow-sm,
 .memphis-shadow-sm {
-    box-shadow: 3px 3px 0px var(--memphis-dark);
+    box-shadow: 3px 3px 0px var(--pm-noir);
 }
 
+.pm-shadow,
 .memphis-shadow {
-    box-shadow: 4px 4px 0px var(--memphis-dark);
+    box-shadow: 5px 5px 0px var(--pm-noir);
 }
 
+.pm-shadow-lg,
 .memphis-shadow-lg {
-    box-shadow: 6px 6px 0px var(--memphis-dark);
+    box-shadow: 7px 7px 0px var(--pm-noir);
 }
 
-.memphis-shadow-pink {
-    box-shadow: 5px 5px 0px var(--memphis-pink);
-}
-
-.memphis-shadow-yellow {
-    box-shadow: 5px 5px 0px var(--memphis-yellow);
-}
-
+.pm-shadow-cobalt,
 .memphis-shadow-blue {
-    box-shadow: 5px 5px 0px var(--memphis-blue);
+    box-shadow: 5px 5px 0px var(--pm-cobalt);
 }
 
-/* Tarjetas con estilo Memphis */
+.pm-shadow-acid,
+.memphis-shadow-yellow {
+    box-shadow: 5px 5px 0px var(--pm-acid);
+}
+
+.pm-shadow-rose,
+.memphis-shadow-pink {
+    box-shadow: 5px 5px 0px var(--pm-rose);
+}
+
+/* Sombra doble multicapa posmodernista */
+.pm-shadow-layered {
+    box-shadow: 4px 4px 0px var(--pm-noir), 8px 8px 0px var(--pm-acid);
+}
+
+.pm-shadow-layered-cobalt {
+    box-shadow: 4px 4px 0px var(--pm-noir), 8px 8px 0px var(--pm-cobalt);
+}
+
+/* Tarjetas Arquitectónicas Posmodernas */
+.pm-card,
 .memphis-card {
-    background: #FFFFFF;
-    border: 2.5px solid var(--memphis-dark);
-    border-radius: 16px;
-    box-shadow: 5px 5px 0px var(--memphis-dark);
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    background: var(--pm-surface);
+    border: 2px solid var(--pm-noir);
+    border-radius: 14px;
+    box-shadow: 5px 5px 0px var(--pm-noir);
+    transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.15s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+.pm-card:hover,
 .memphis-card:hover {
     transform: translate(-2px, -2px);
-    box-shadow: 7px 7px 0px var(--memphis-dark);
+    box-shadow: 7px 7px 0px var(--pm-noir);
 }
 
-/* Botones Memphis con efecto táctil 3D */
+/* Botones Posmodernistas: Táctiles, Expresivos, Asertivos */
+.btn-pm-primary,
 .btn-memphis-primary {
-    background-color: var(--memphis-pink);
+    background-color: var(--pm-cobalt);
     color: #FFFFFF;
-    border: 2.5px solid var(--memphis-dark);
+    border: 2px solid var(--pm-noir);
     font-weight: 800;
-    box-shadow: 4px 4px 0px var(--memphis-dark);
-    transition: all 0.12s ease;
+    box-shadow: 4px 4px 0px var(--pm-noir);
+    transition: all 0.12s cubic-bezier(0.16, 1, 0.3, 1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
+.btn-pm-primary:hover,
 .btn-memphis-primary:hover {
-    background-color: var(--memphis-pink-light);
+    background-color: var(--pm-cobalt-light);
     transform: translate(-2px, -2px);
-    box-shadow: 6px 6px 0px var(--memphis-dark);
+    box-shadow: 6px 6px 0px var(--pm-noir);
 }
 
+.btn-pm-primary:active,
 .btn-memphis-primary:active {
     transform: translate(2px, 2px);
-    box-shadow: 2px 2px 0px var(--memphis-dark);
+    box-shadow: 2px 2px 0px var(--pm-noir);
 }
 
+.btn-pm-acid,
 .btn-memphis-yellow {
-    background-color: var(--memphis-yellow);
-    color: var(--memphis-dark);
-    border: 2.5px solid var(--memphis-dark);
+    background-color: var(--pm-acid);
+    color: var(--pm-noir);
+    border: 2px solid var(--pm-noir);
     font-weight: 800;
-    box-shadow: 4px 4px 0px var(--memphis-dark);
-    transition: all 0.12s ease;
+    box-shadow: 4px 4px 0px var(--pm-noir);
+    transition: all 0.12s cubic-bezier(0.16, 1, 0.3, 1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
+.btn-pm-acid:hover,
 .btn-memphis-yellow:hover {
-    background-color: var(--memphis-yellow-light);
+    background-color: var(--pm-acid-light);
     transform: translate(-2px, -2px);
-    box-shadow: 6px 6px 0px var(--memphis-dark);
+    box-shadow: 6px 6px 0px var(--pm-noir);
 }
 
+.btn-pm-acid:active,
 .btn-memphis-yellow:active {
     transform: translate(2px, 2px);
-    box-shadow: 2px 2px 0px var(--memphis-dark);
+    box-shadow: 2px 2px 0px var(--pm-noir);
 }
 
-.btn-memphis-blue {
-    background-color: var(--memphis-blue);
+.btn-pm-dark {
+    background-color: var(--pm-noir);
     color: #FFFFFF;
-    border: 2.5px solid var(--memphis-dark);
+    border: 2px solid var(--pm-noir);
     font-weight: 800;
-    box-shadow: 4px 4px 0px var(--memphis-dark);
-    transition: all 0.12s ease;
+    box-shadow: 4px 4px 0px var(--pm-acid);
+    transition: all 0.12s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.btn-memphis-blue:hover {
-    background-color: var(--memphis-blue-light);
+.btn-pm-dark:hover {
+    background-color: var(--pm-black);
+    color: var(--pm-acid);
     transform: translate(-2px, -2px);
-    box-shadow: 6px 6px 0px var(--memphis-dark);
+    box-shadow: 6px 6px 0px var(--pm-acid);
 }
 
+.btn-pm-dark:active {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0px var(--pm-acid);
+}
+
+.btn-pm-rose,
+.btn-memphis-blue {
+    background-color: var(--pm-rose);
+    color: #FFFFFF;
+    border: 2px solid var(--pm-noir);
+    font-weight: 800;
+    box-shadow: 4px 4px 0px var(--pm-noir);
+    transition: all 0.12s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-pm-rose:hover,
+.btn-memphis-blue:hover {
+    background-color: var(--pm-rose-light);
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0px var(--pm-noir);
+}
+
+.btn-pm-rose:active,
 .btn-memphis-blue:active {
     transform: translate(2px, 2px);
-    box-shadow: 2px 2px 0px var(--memphis-dark);
+    box-shadow: 2px 2px 0px var(--pm-noir);
 }
 
-/* Chips de selección de horario Memphis */
-.time-chip {
-    border: 2px solid var(--memphis-dark) !important;
-    background: #FFFFFF;
-    color: var(--memphis-dark);
-    box-shadow: 2px 2px 0px var(--memphis-dark);
-    transition: all 0.15s ease;
+/* Sellos / Stickers Posmodernistas */
+.pm-stamp,
+.pm-sticker,
+.memphis-sticker {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 10px;
+    font-size: 11px;
+    font-weight: 800;
+    border-radius: 9999px;
+    border: 2px solid var(--pm-noir);
+    box-shadow: 2.5px 2.5px 0px var(--pm-noir);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    font-family: 'Space Grotesk', sans-serif;
 }
 
-.time-chip:hover {
-    background-color: var(--memphis-yellow-light);
-    transform: translate(-1px, -1px);
-    box-shadow: 3px 3px 0px var(--memphis-dark);
+.sticker-pink {
+    background-color: var(--pm-rose);
+    color: #FFFFFF;
 }
 
-.time-chip.selected {
-    background-color: var(--memphis-pink) !important;
-    color: #FFFFFF !important;
-    border-color: var(--memphis-dark) !important;
-    box-shadow: 4px 4px 0px var(--memphis-dark) !important;
-    transform: translate(-2px, -2px);
+.sticker-yellow {
+    background-color: var(--pm-acid);
+    color: var(--pm-noir);
 }
 
-/* Indicadores de pasos (Wizard) Memphis */
+.sticker-blue {
+    background-color: var(--pm-cobalt);
+    color: #FFFFFF;
+}
+
+.sticker-teal {
+    background-color: var(--pm-teal);
+    color: var(--pm-noir);
+}
+
+.sticker-purple {
+    background-color: var(--pm-orchid);
+    color: #FFFFFF;
+}
+
+.sticker-dark {
+    background-color: var(--pm-noir);
+    color: var(--pm-acid);
+}
+
+/* Indicadores de Paso Posmodernistas (Wizard) */
 .wizard-step-bullet {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: 800;
-    font-size: 0.95rem;
-    border: 2.5px solid var(--memphis-dark);
+    font-family: 'Space Mono', monospace;
+    font-size: 14px;
+    border: 2px solid var(--pm-noir);
     transition: all 0.2s ease;
 }
 
 .wizard-step-bullet.active {
-    background-color: var(--memphis-yellow);
-    color: var(--memphis-dark);
-    box-shadow: 3px 3px 0px var(--memphis-dark);
-    transform: scale(1.08);
+    background-color: var(--pm-acid);
+    color: var(--pm-noir);
+    box-shadow: 3px 3px 0px var(--pm-noir);
+    transform: scale(1.08) rotate(-2deg);
 }
 
 .wizard-step-bullet.completed {
-    background-color: var(--memphis-teal);
-    color: var(--memphis-dark);
-    box-shadow: 3px 3px 0px var(--memphis-dark);
+    background-color: var(--pm-cobalt);
+    color: #FFFFFF;
+    box-shadow: 2px 2px 0px var(--pm-noir);
 }
 
 .wizard-step-bullet.inactive {
     background-color: #FFFFFF;
-    color: #9CA3AF;
-    box-shadow: 2px 2px 0px var(--memphis-dark);
+    color: #6B7280;
+    border-color: #9CA3AF;
 }
 
-/* Elementos decorativos Memphis (cintas, stickers, zigzags) */
-.memphis-sticker {
-    display: inline-block;
-    padding: 4px 12px;
-    border: 2px solid var(--memphis-dark);
-    border-radius: 9999px;
-    font-weight: 800;
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    box-shadow: 2.5px 2.5px 0px var(--memphis-dark);
+/* Chips de Horario Posmodernistas */
+.time-chip {
+    border: 2px solid var(--pm-noir) !important;
+    background: #FFFFFF;
+    color: var(--pm-noir);
+    font-weight: 700;
+    box-shadow: 3px 3px 0px var(--pm-noir);
+    transition: all 0.12s ease;
+    cursor: pointer;
 }
 
-.sticker-pink { background: var(--memphis-pink); color: #FFF; }
-.sticker-yellow { background: var(--memphis-yellow); color: var(--memphis-dark); }
-.sticker-blue { background: var(--memphis-blue); color: #FFF; }
-.sticker-teal { background: var(--memphis-teal); color: var(--memphis-dark); }
-.sticker-purple { background: var(--memphis-purple); color: #FFF; }
-
-/* Decoración geométrica Memphis */
-.memphis-pattern-stripes {
-    background: repeating-linear-gradient(
-        45deg,
-        #FFBE0B,
-        #FFBE0B 10px,
-        #FF006E 10px,
-        #FF006E 20px
-    );
+.time-chip:hover {
+    background-color: var(--pm-acid-light);
+    transform: translate(-1.5px, -1.5px);
+    box-shadow: 4.5px 4.5px 0px var(--pm-noir);
 }
 
-.memphis-pattern-dots {
-    background-image: radial-gradient(#18181B 15%, transparent 16%);
-    background-size: 10px 10px;
+.time-chip.selected {
+    background-color: var(--pm-cobalt) !important;
+    color: #FFFFFF !important;
+    border-color: var(--pm-noir) !important;
+    transform: translate(-2px, -2px);
+    box-shadow: 4px 4px 0px var(--pm-noir) !important;
 }
 
-/* Scrollbars Memphis */
+.time-chip.selected div {
+    color: #FFFFFF !important;
+}
+
+/* Tarjeta de Servicio Interactiva */
+.service-card {
+    transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.service-card:hover {
+    border-color: var(--pm-noir);
+    background-color: #FFFFFF;
+    transform: translate(-2px, -2px);
+    box-shadow: 5px 5px 0px var(--pm-noir);
+}
+
+/* Cinta Ticker Posmodernista (Marquee) */
+.pm-marquee-wrap {
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.pm-marquee-track {
+    display: inline-flex;
+    animation: marquee 26s linear infinite;
+}
+
+@keyframes marquee {
+    0% { transform: translateX(0%); }
+    100% { transform: translateX(-50%); }
+}
+
+/* Elementos arquitectónicos decorativos posmodernos */
+.pm-crosshair {
+    position: relative;
+}
+
+.pm-crosshair::before {
+    content: "+";
+    position: absolute;
+    font-family: 'Space Mono', monospace;
+    font-weight: bold;
+    color: var(--pm-noir);
+    opacity: 0.6;
+}
+
+/* Scrollbar con carácter posmodernista */
 ::-webkit-scrollbar {
     width: 8px;
     height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-    background: #FFFDF9;
-    border-left: 1px solid var(--memphis-dark);
+    background: var(--pm-bg);
+    border-left: 1px solid rgba(13, 17, 23, 0.1);
 }
 
 ::-webkit-scrollbar-thumb {
-    background: var(--memphis-pink);
-    border: 1.5px solid var(--memphis-dark);
-    border-radius: 4px;
+    background: var(--pm-noir);
+    border: 1px solid var(--pm-bg);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: var(--memphis-purple);
+    background: var(--pm-cobalt);
 }
 
-/* ==========================================================
-   ESTILOS MEMPHIS PARA FORMULARIOS, TABLAS Y PANELES ADMIN
-   ========================================================== */
-input[type="text"],
-input[type="email"],
-input[type="password"],
-input[type="number"],
-input[type="date"],
-input[type="time"],
-select,
-textarea {
-    border: 2px solid var(--memphis-dark) !important;
-    border-radius: 12px !important;
-    font-weight: 600 !important;
-    color: var(--memphis-dark) !important;
-    background-color: #FFFFFF !important;
-    transition: all 0.15s ease !important;
+/* Badge de Estado en Tablas */
+.pm-status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 8px;
+    font-size: 11px;
+    font-weight: 800;
+    border-radius: 6px;
+    border: 2px solid var(--pm-noir);
+    box-shadow: 2px 2px 0px var(--pm-noir);
+    font-family: 'Space Mono', monospace;
+    letter-spacing: -0.01em;
 }
-
-input[type="text"]:focus,
-input[type="email"]:focus,
-input[type="password"]:focus,
-input[type="number"]:focus,
-input[type="date"]:focus,
-input[type="time"]:focus,
-select:focus,
-textarea:focus {
-    outline: none !important;
-    box-shadow: 3px 3px 0px var(--memphis-dark) !important;
-    border-color: var(--memphis-pink) !important;
-}
-
-/* Modales y Contenedores Memphis */
-.memphis-modal {
-    border: 2.5px solid var(--memphis-dark) !important;
-    box-shadow: 6px 6px 0px var(--memphis-dark) !important;
-    border-radius: 20px !important;
-    background-color: #FFFFFF !important;
-}
-
-/* Tablas Memphis */
-.memphis-table-container {
-    border: 2px solid var(--memphis-dark) !important;
-    box-shadow: 4px 4px 0px var(--memphis-dark) !important;
-    border-radius: 16px !important;
-    overflow: hidden !important;
-    background-color: #FFFFFF !important;
-}
-
-table thead tr {
-    background-color: #FFF9E6 !important;
-    border-bottom: 2px solid var(--memphis-dark) !important;
-    color: var(--memphis-dark) !important;
-}
-
-table thead th {
-    font-weight: 800 !important;
-    letter-spacing: 0.04em !important;
-    color: var(--memphis-dark) !important;
-}
-
-/* Clases auxiliares de sombras */
-.shadow-2xs {
-    box-shadow: 3px 3px 0px var(--memphis-dark) !important;
-    border: 2px solid var(--memphis-dark) !important;
-}
-

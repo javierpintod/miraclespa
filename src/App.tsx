@@ -18,8 +18,8 @@ import { SpaStorage } from './services/storage';
 import { Appointment, Service, Professional, Supply, NotificationEmail } from './types';
 
 export default function App() {
-  const [currentView, setCurrentView] = useState<AppView>('dashboard');
-  const [themeMode, setThemeMode] = useState<'serene' | 'memphis'>('serene');
+  const [currentView, setCurrentView] = useState<AppView>('booking');
+  const [themeMode, setThemeMode] = useState<'serene' | 'posmodernista'>('posmodernista');
   const [selectedBranch, setSelectedBranch] = useState('Sede Principal - Las Palmas');
 
   // State loaded from SpaStorage
@@ -61,7 +61,7 @@ export default function App() {
 
   return (
     <div className={`min-h-screen flex flex-col transition-colors ${
-      themeMode === 'memphis' ? 'bg-[#fbf7ee] text-[#181d1a]' : 'bg-[#f6fbf5] text-[#181d1a]'
+      themeMode === 'posmodernista' ? 'bg-[#F7F5EE] text-[#0D1117]' : 'bg-[#f6fbf5] text-[#181d1a]'
     }`}>
       {/* Top Navigation */}
       <Header
@@ -69,7 +69,7 @@ export default function App() {
         onNavigate={setCurrentView}
         unreadEmailsCount={emails.length}
         themeMode={themeMode}
-        onToggleTheme={() => setThemeMode(prev => (prev === 'serene' ? 'memphis' : 'serene'))}
+        onToggleTheme={() => setThemeMode(prev => (prev === 'serene' ? 'posmodernista' : 'serene'))}
         selectedBranch={selectedBranch}
         onChangeBranch={setSelectedBranch}
       />

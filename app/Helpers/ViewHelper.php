@@ -36,29 +36,29 @@ class ViewHelper {
         $badges = [
             'confirmada' => [
                 'label' => '✓ Confirmada',
-                'class' => 'bg-[#06D6A0] text-[#18181B] border-2 border-[#18181B]'
+                'class' => 'bg-[#00E5A3] text-[#0D1117] border-2 border-[#0D1117]'
             ],
             'pendiente' => [
                 'label' => '⏱ Pendiente',
-                'class' => 'bg-[#FFBE0B] text-[#18181B] border-2 border-[#18181B]'
+                'class' => 'bg-[#D4FF00] text-[#0D1117] border-2 border-[#0D1117]'
             ],
             'completada' => [
                 'label' => '★ Completada',
-                'class' => 'bg-[#3A86FF] text-white border-2 border-[#18181B]'
+                'class' => 'bg-[#2548E8] text-white border-2 border-[#0D1117]'
             ],
             'cancelada' => [
                 'label' => '✕ Cancelada',
-                'class' => 'bg-[#FF006E] text-white border-2 border-[#18181B]'
+                'class' => 'bg-[#FF2E7E] text-white border-2 border-[#0D1117]'
             ],
             'reprogramada' => [
                 'label' => '↻ Reprogramada',
-                'class' => 'bg-[#8338EC] text-white border-2 border-[#18181B]'
+                'class' => 'bg-[#9E00FF] text-white border-2 border-[#0D1117]'
             ],
         ];
 
-        $info = $badges[$status] ?? ['label' => ucfirst($status), 'class' => 'bg-white text-[#18181B] border-2 border-[#18181B]'];
+        $info = $badges[$status] ?? ['label' => ucfirst($status), 'class' => 'bg-white text-[#0D1117] border-2 border-[#0D1117]'];
 
-        return "<span class='inline-flex items-center px-3 py-1 rounded-full text-xs font-extrabold memphis-shadow-sm {$info['class']}'>
+        return "<span class='inline-flex items-center px-2.5 py-1 rounded-md text-xs font-extrabold font-mono uppercase tracking-wide pm-shadow-xs {$info['class']}'>
                     {$info['label']}
                 </span>";
     }

@@ -201,21 +201,21 @@ $settings = AppConfig::getAllSettings();
         </div>
 
         <div class="flex justify-end">
-            <button type="submit" class="bg-[#12372a] text-[#d4af37] px-8 py-3.5 rounded-xl font-bold text-sm hover:bg-[#1a4a39] shadow-md transition-all">
-                Guardar Todos los Cambios
+            <button type="submit" class="btn-pm-primary px-8 py-3.5 rounded-xl font-bold font-space text-sm">
+                Guardar Todos los Cambios →
             </button>
         </div>
     </form>
 
     <!-- Formulario de Envío de Correo de Prueba -->
-    <div class="bg-white rounded-2xl border border-gray-200 p-6 shadow-2xs">
-        <h3 class="font-serif font-bold text-base text-[#12372a] mb-2">Probar Envío de Correo Electrónico</h3>
-        <p class="text-xs text-gray-500 mb-4">Ingresa un correo de destino para disparar una prueba con las configuraciones actuales.</p>
+    <div class="bg-white rounded-2xl border-2 border-[#0D1117] p-6 pm-shadow-sm">
+        <h3 class="font-syne font-bold text-base text-[#0D1117] mb-2">Probar Envío de Correo Electrónico</h3>
+        <p class="text-xs text-gray-500 mb-4 font-medium">Ingresa un correo de destino para disparar una prueba con las configuraciones actuales.</p>
 
         <form method="POST" class="flex flex-col sm:flex-row gap-3">
             <input type="hidden" name="action" value="send_test_email">
-            <input type="email" name="test_recipient" required placeholder="tu-correo@ejemplo.com" class="flex-1 px-3 py-2 rounded-xl border border-gray-300 text-xs focus:outline-none focus:ring-2 focus:ring-[#12372a]">
-            <button type="submit" class="bg-[#12372a] text-white px-5 py-2 rounded-xl text-xs font-bold hover:bg-[#1a4a39] transition-colors shrink-0">
+            <input type="email" name="test_recipient" required placeholder="tu-correo@ejemplo.com" class="flex-1 px-3 py-2 rounded-xl border-2 border-[#0D1117] text-xs font-mono-pm focus:outline-none focus:ring-2 focus:ring-[#2548E8]">
+            <button type="submit" class="btn-pm-acid px-5 py-2.5 rounded-xl text-xs font-bold font-space shrink-0">
                 Enviar Correo de Prueba
             </button>
         </form>
