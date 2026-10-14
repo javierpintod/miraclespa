@@ -47,11 +47,18 @@ Sistema web completo y modular desarrollado en **PHP 8** y **MySQL/MariaDB**, di
   - `POST /api/auth/login.php`: Recibe credenciales y emite el token JWT con expiración de 24h.
   - `GET /api/auth/verify.php`: Valida la firma criptográfica y retorna los datos del token vigente.
 
+### 6. Control de Sesión Única por Usuario (Patrón Singleton - GoF)
+- **Instancia Global Única (`UserSessionManager`):** Implementa el patrón creacional Singleton clásico con constructor privado, prevención de clonación (`__clone`) y deserialización (`__wakeup`), siendo la única autoridad de sesión durante todo el ciclo de vida de la aplicación.
+- **Garantía de Sesión Única Activa:** Cada usuario autenticado solo puede tener una única sesión activa en toda la plataforma a la vez:
+  - Al iniciar sesión en un nuevo navegador o dispositivo, cualquier sesión previa del usuario queda revocada e invalidada inmediatamente en la base de datos (`active_sessions` con clave única sobre `user_id`).
+  - Al siguiente intento de acceso en la sesión anterior, el sistema detecta el conflicto, destruye las credenciales locales y notifica al usuario con un aviso de seguridad.
+  - Compatible tanto con sesiones PHP tradicionales como con tokens JWT (`sid`).
+
 ---
 
 ## 🧪 Pruebas Automatizadas
 
-El sistema cuenta con una suite de **28 pruebas unitarias y de integración** que cubren:
+El sistema cuenta con una suite de **48 pruebas unitarias y de integración** que cubren:
 1. Lógica matemática de tiempos y duraciones.
 2. Detección de colisiones temporales considerando buffers de higienización.
 3. Validación estricta contra dobles reservas.
@@ -63,6 +70,14 @@ El sistema cuenta con una suite de **28 pruebas unitarias y de integración** qu
 9. Detección y rechazo de tokens manipulados/adulterados.
 10. Rechazo estricto de tokens JWT expirados.
 11. Codificación segura Base64Url sin colisiones.
+12. Identidad y unicidad de instancia del patrón Singleton (`UserSessionManager`).
+13. Encapsulamiento del constructor y prevención de clonación/deserialización.
+14. Registro de token criptográfico y verificación de sesión activa.
+15. Invalidación automática de sesiones anteriores al abrir sesión concurrente.
+16. Purgado local y notificación flash ante detección de conflicto de sesión.
+17. Aislamiento e independencia de sesiones entre diferentes usuarios.
+18. Revocación atómica al cerrar sesión (Logout).
+19. Integración fluida entre `AuthHelper`, JWT y `UserSessionManager`.
 
 ### Ejecutar Pruebas:
 - **En el Navegador:** Abre `http://localhost/miraclespa/tests.php`

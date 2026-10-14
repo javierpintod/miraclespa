@@ -9,15 +9,30 @@ if (session_status() === PHP_SESSION_NONE) {
 
 require_once __DIR__ . '/../../config/app.php';
 require_once __DIR__ . '/../Services/JwtService.php';
+require_once __DIR__ . '/../Services/UserSessionManager.php';
 
 class AuthHelper {
     /**
-     * Comprueba si el usuario actual está autenticado por Sesión PHP o Token JWT
+     * Retorna la instancia única del administrador de sesiones (Singleton)
+     */
+    public static function getSessionManager(): UserSessionManager {
+        return UserSessionManager::getInstance();
+    }
+
+    /**
+     * Comprueba si el usuario actual está autenticado por Sesión PHP o Token JWT,
+     * validando estrictamente que sea la ÚNICA sesión activa registrada en el sistema.
      */
     public static function isLoggedIn(): bool {
-        // 1. Verificar Sesión PHP
+        $sessionManager = self::getSessionManager();
+
+        // 1. Verificar Sesión PHP nativa y validar contra Singleton / BD
         if (!empty($_SESSION['admin_user_id'])) {
-            return true;
+            if ($sessionManager->validateCurrentSession()) {
+                return true;
+            }
+            // Si la sesión fue revocada por otro inicio de sesión, validateCurrentSession() ya limpió las credenciales
+            return false;
         }
 
         // 2. Verificar Token JWT en encabezado 'Authorization: Bearer' o cookie
@@ -25,13 +40,24 @@ class AuthHelper {
         if ($token) {
             $validation = JwtService::validateToken($token);
             if ($validation['valid']) {
-                // Hidratar sesión temporalmente a partir del payload del JWT
                 $payload = $validation['payload'];
-                $_SESSION['admin_user_id'] = $payload['sub'] ?? 1;
+                $userId = (int)($payload['sub'] ?? 1);
+                $jwtSid = $payload['sid'] ?? null;
+
+                // Si el token incluye identificador de sesión única, verificar que continúe siendo el activo
+                if ($jwtSid !== null && !$sessionManager->isSessionActive($userId, $jwtSid)) {
+                    return false;
+                }
+
+                // Hidratar sesión a partir del payload del JWT
+                $_SESSION['admin_user_id'] = $userId;
                 $_SESSION['admin_username'] = $payload['username'] ?? 'admin';
                 $_SESSION['admin_name'] = $payload['name'] ?? 'Administrador';
                 $_SESSION['admin_role'] = $payload['role'] ?? 'admin';
                 $_SESSION['jwt_token'] = $token;
+                if ($jwtSid) {
+                    $_SESSION['active_session_token'] = $jwtSid;
+                }
                 return true;
             }
         }
@@ -51,8 +77,8 @@ class AuthHelper {
                 http_response_code(401);
                 header('Content-Type: application/json; charset=UTF-8');
                 echo json_encode([
-                    'error' => 'No autorizado. Se requiere un token JWT válido en el encabezado Authorization: Bearer <token>',
-                    'code' => 'UNAUTHORIZED_JWT'
+                    'error' => 'No autorizado. La sesión no está activa o fue revocada por un inicio de sesión en otro dispositivo.',
+                    'code' => 'UNAUTHORIZED_SESSION_CONFLICT'
                 ]);
                 exit;
             }
@@ -64,51 +90,51 @@ class AuthHelper {
     }
 
     /**
-     * Inicia sesión guardando en sesión y generando el token JWT
+     * Inicia sesión garantizando una ÚNICA sesión activa en el sistema (Patrón Singleton).
+     * Cualquier sesión abierta anteriormente para este usuario queda invalidada.
      */
     public static function login(array $user): string {
-        $_SESSION['admin_user_id'] = $user['id'];
+        $userId = (int)$user['id'];
+        $sessionManager = self::getSessionManager();
+
+        // Registrar nueva sesión única en el Singleton
+        $activeToken = $sessionManager->registerSession($userId);
+
+        $_SESSION['admin_user_id'] = $userId;
         $_SESSION['admin_username'] = $user['username'];
         $_SESSION['admin_name'] = $user['name'];
         $_SESSION['admin_role'] = $user['role'];
+        $_SESSION['active_session_token'] = $activeToken;
 
-        // Generar JWT
+        // Generar JWT incluyendo el claim 'sid' enlazado a la sesión única activa
         $jwtToken = JwtService::generateToken([
-            'sub' => $user['id'],
+            'sub' => $userId,
             'username' => $user['username'],
             'name' => $user['name'],
-            'role' => $user['role']
+            'role' => $user['role'],
+            'sid' => $activeToken
         ]);
 
         $_SESSION['jwt_token'] = $jwtToken;
 
-        // Establecer cookie HttpOnly para el token
-        setcookie('jwt_token', $jwtToken, [
-            'expires' => time() + 86400,
-            'path' => '/',
-            'httponly' => true,
-            'samesite' => 'Lax'
-        ]);
+        // Establecer cookie HttpOnly para el token si los encabezados no se han enviado aún
+        if (!headers_sent()) {
+            setcookie('jwt_token', $jwtToken, [
+                'expires' => time() + 86400,
+                'path' => '/',
+                'httponly' => true,
+                'samesite' => 'Lax'
+            ]);
+        }
 
         return $jwtToken;
     }
 
     /**
-     * Cierra la sesión y destruye el token JWT
+     * Cierra la sesión activa única tanto localmente como en la base de datos
      */
     public static function logout(): void {
-        unset($_SESSION['admin_user_id']);
-        unset($_SESSION['admin_username']);
-        unset($_SESSION['admin_name']);
-        unset($_SESSION['admin_role']);
-        unset($_SESSION['jwt_token']);
-        session_destroy();
-
-        // Borrar cookie
-        setcookie('jwt_token', '', [
-            'expires' => time() - 3600,
-            'path' => '/'
-        ]);
+        self::getSessionManager()->terminateSession();
     }
 
     /**

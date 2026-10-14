@@ -8,6 +8,16 @@ require_once __DIR__ . '/../app/Models/AdminUser.php';
 require_once __DIR__ . '/../app/Helpers/AuthHelper.php';
 
 $error = '';
+$warning = '';
+
+$flash = AuthHelper::getFlash();
+if ($flash) {
+    if ($flash['type'] === 'session_conflict' || $flash['type'] === 'warning') {
+        $warning = $flash['message'];
+    } elseif ($flash['type'] === 'error') {
+        $error = $flash['message'];
+    }
+}
 
 if (AuthHelper::isLoggedIn()) {
     header('Location: index.php');
@@ -60,6 +70,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
 
         <div class="p-8">
+            <?php if ($warning): ?>
+                <div class="bg-[#FFBE0B] border-2 border-[#18181B] text-[#18181B] text-xs rounded-xl p-3.5 mb-6 font-bold memphis-shadow-sm flex items-start gap-2.5">
+                    <span class="text-lg shrink-0">⚡</span>
+                    <div>
+                        <div class="font-black uppercase text-[10px] tracking-wider text-[#FF006E] mb-0.5">Aviso de Sesión Única</div>
+                        <div><?= htmlspecialchars($warning) ?></div>
+                    </div>
+                </div>
+            <?php endif; ?>
+
             <?php if ($error): ?>
                 <div class="bg-[#FF006E] border-2 border-[#18181B] text-white text-xs rounded-xl p-3 mb-6 font-bold memphis-shadow-sm">
                     ⚠️ <?= htmlspecialchars($error) ?>

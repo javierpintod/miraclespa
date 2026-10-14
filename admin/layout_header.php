@@ -107,6 +107,10 @@ $flash = AuthHelper::getFlash();
                 <div>
                     <div class="font-bold text-white"><?= htmlspecialchars($loggedUser['name'] ?? 'Admin') ?></div>
                     <div class="text-[10px] text-[#06D6A0] font-extrabold uppercase"><?= htmlspecialchars($loggedUser['role'] ?? 'Admin') ?></div>
+                    <div class="text-[9px] text-[#FFBE0B] flex items-center gap-1 mt-1 font-bold tracking-tight">
+                        <span class="inline-block w-1.5 h-1.5 rounded-full bg-[#06D6A0] animate-pulse"></span>
+                        Sesión Única Activa
+                    </div>
                 </div>
                 <a href="logout.php" title="Cerrar Sesión" class="text-gray-300 hover:text-[#FF006E] transition-colors p-1.5 rounded-lg hover:bg-[#27272A]">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
@@ -137,7 +141,7 @@ $flash = AuthHelper::getFlash();
         <!-- ALERTAS FLASH MEMPHIS -->
         <?php if ($flash): ?>
             <div class="px-6 pt-4">
-                <div class="p-4 rounded-xl text-xs font-bold border-2 border-[#18181B] memphis-shadow-sm <?= $flash['type'] === 'success' ? 'bg-[#06D6A0] text-[#18181B]' : 'bg-[#FF006E] text-white' ?>">
+                <div class="p-4 rounded-xl text-xs font-bold border-2 border-[#18181B] memphis-shadow-sm <?= $flash['type'] === 'success' ? 'bg-[#06D6A0] text-[#18181B]' : (($flash['type'] === 'warning' || $flash['type'] === 'session_conflict') ? 'bg-[#FFBE0B] text-[#18181B]' : 'bg-[#FF006E] text-white') ?>">
                     <?= htmlspecialchars($flash['message']) ?>
                 </div>
             </div>
